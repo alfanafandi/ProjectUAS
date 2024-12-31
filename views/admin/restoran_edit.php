@@ -23,7 +23,7 @@
             <!-- Formulir Input Restoran -->
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Restoran</h2>
-                <form action="/../../index.php?modul=restoran&fitur=update&id=<?php echo $restoran->restoran_id; ?>" method="POST">
+                <form action="/../../index.php?modul=restoran&fitur=update&id=<?php echo $restoran->restoran_id; ?>" method="POST" enctype="multipart/form-data">
                     <!-- Nama Restoran -->
                     <div class="mb-4">
                         <label for="restoran_nama" class="block text-gray-700 text-sm font-bold mb-2">Nama Restoran:</label>
@@ -34,6 +34,12 @@
                     <div class="mb-4">
                         <label for="restoran_password" class="block text-gray-700 text-sm font-bold mb-2">Kata Sandi:</label>
                         <input type="password" id="restoran_password" name="restoran_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Kata Sandi" required>
+                    </div>
+
+                    <!-- Gambar Restoran -->
+                    <div class="mb-4">
+                        <label for="restoran_gambar" class="block text-gray-700 text-sm font-bold mb-2">Gambar Restoran:</label>
+                        <input type="file" id="restoran_gambar" name="restoran_gambar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" accept="image/*">
                     </div>
 
                     <!-- Submit Button -->

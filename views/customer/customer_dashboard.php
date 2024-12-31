@@ -20,12 +20,14 @@
     <div class="w-screen p-0 m-0">
         <!-- Saldo dan Promo -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-full">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h2 class="text-lg font-semibold">Saldo Anda</h2>
-                    <p class="text-green-500 text-xl font-bold"><?php echo "Rp " . number_format($saldo, 0, ',', '.'); ?></p>
+            <div class="bg-gradient-to-r from-blue-400 to-blue-500 p-4 rounded-lg shadow-md">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-lg font-semibold text-white">Saldo Anda</h2>
+                        <p class="text-white text-xl font-bold"><?php echo "Rp " . number_format($saldo, 0, ',', '.'); ?></p>
+                    </div>
+                    <a href="/index.php?modul=saldo" class="bg-white text-blue-500 text-l py-2 px-4 rounded-lg shadow-md hover:bg-gray-200 transition">Isi Saldo</a>
                 </div>
-                <a href="/index.php?modul=saldo" class="text-blue-500 text-l">Isi Saldo</a>
             </div>
             <!-- Promo Hari Ini -->
             <div class="mt-4">

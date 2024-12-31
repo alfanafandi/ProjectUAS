@@ -124,5 +124,40 @@
         ],
         "totalPrice": 22000,
         "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "17",
+                "name": "Sosro",
+                "price": 10000,
+                "quantity": 1,
+                "restoran_id": "2"
+            }
+        ],
+        "totalPrice": 10000,
+        "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "16",
+                "name": "Paker Komplit Ayam",
+                "price": 35000,
+                "quantity": 1,
+                "restoran_id": "2"
+            },
+            {
+                "id": "17",
+                "name": "Sosro",
+                "price": 10000,
+                "quantity": 1,
+                "restoran_id": "2"
+            }
+        ],
+        "totalPrice": 36000,
+        "timestamp": "2024-12-31"
     }
 ]

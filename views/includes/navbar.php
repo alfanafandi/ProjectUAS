@@ -10,11 +10,31 @@ $username = $_SESSION['username'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restoo</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tambahkan animasi fade-in */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.15s ease-out;
+            /* Percepat animasi menjadi 0.15s */
+        }
+    </style>
     <script>
         // Script untuk toggle dropdown
         function toggleDropdown() {
             const dropdown = document.getElementById('profileDropdown');
             dropdown.classList.toggle('hidden');
+            dropdown.classList.toggle('fade-in');
         }
     </script>
 </head>
@@ -46,7 +66,10 @@ $username = $_SESSION['username'];
                 <?= htmlspecialchars(substr($username, 0, 2)); ?>
             </div>
             <!-- Dropdown Menu -->
-            <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2">
+            <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2">
+                <div class="px-4 py-2 text-sm text-gray-700">
+                    <strong><?= htmlspecialchars($username); ?></strong>
+                </div>
                 <hr class="my-2">
                 <a href="index.php?modul=riwayat" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Pembelian</a>
                 <a href="index.php?modul=logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Keluar</a>
