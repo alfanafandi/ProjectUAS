@@ -17,7 +17,7 @@
     <section class="bg-gray-200 py-12">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-4xl font-bold text-gray-800 mb-4">Rekomendasi</h1>
-            <p class="text-lg text-gray-600">Eksplor kumpulan rekomendasi yang kami buat untuk berbagai kebutuhanmu</p>
+            <p class="text-lg text-gray-600">Eksplor kumpulan resto best seller yang kami siapkan untuk berbagai kebutuhanmu</p>
         </div>
     </section>
 

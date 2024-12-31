@@ -22,19 +22,25 @@ class MenuModel
 
     public function initializeDefaultMenu()
     {
-        $this->addMenu(1, "Nasi Goreng", "Makanan", 20000);
-        $this->addMenu(1, "Ayam Bakar", "Makanan", 30000);
-        $this->addMenu(2, "Coca-cola", "Makanan", 30000);
-        $this->addMenu(3, "Burger", "Makanan", 30000);
+        $defaultImageDir = __DIR__ . '/../uploads/menus/';
+
+        if (!is_dir($defaultImageDir)) {
+            mkdir($defaultImageDir, 0755, true);
+        }
+
+        $this->addMenu(1, "Nasi Goreng", "Makanan", 20000, "uploads/menus/nasi_goreng.jpg");
+        $this->addMenu(1, "Ayam Bakar", "Makanan", 30000, "uploads/menus/ayam_bakar.jpg");
+        $this->addMenu(2, "Coca-cola", "Minuman", 7000, "uploads/menus/coca_cola.jpg");
+        $this->addMenu(3, "Burger", "Makanan", 25000, "uploads/menus/burger.jpg");
 
         $this->saveToJson();
     }
 
-    public function addMenu($restoran_id, $menu_nama, $menu_kategori, $menu_harga)
+    public function addMenu($restoran_id, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar)
     {
         $restoran = $this->restoranModel->getRestoranById($restoran_id);
         if ($restoran) {
-            $menu = new \Makanan($this->next_id++, $restoran, $menu_nama, $menu_kategori, $menu_harga);
+            $menu = new \Makanan($this->next_id++, $restoran, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar);
             $this->menus[] = $menu;
             $this->saveToJson();
         } else {
@@ -60,7 +66,8 @@ class MenuModel
                 $this->restoranModel->getRestoranById($menu['menu_restoran']['restoran_id']),
                 $menu['menu_nama'],
                 $menu['menu_kategori'],
-                $menu['menu_harga']
+                $menu['menu_harga'],
+                $menu['menu_gambar']
             );
         }, $data['menus']);
         $this->next_id = $data['next_id'];
@@ -93,7 +100,7 @@ class MenuModel
         return $menus_by_restoran;
     }
 
-    public function updateMenu($menu_id, $menu_restoran, $menu_nama, $menu_kategori, $menu_harga)
+    public function updateMenu($menu_id, $menu_restoran, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar)
     {
         foreach ($this->menus as $menu) {
             if ($menu->menu_id == $menu_id) {
@@ -102,6 +109,7 @@ class MenuModel
                 $menu->menu_nama = $menu_nama;
                 $menu->menu_kategori = $menu_kategori;
                 $menu->menu_harga = $menu_harga;
+                $menu->menu_gambar = $menu_gambar;
                 $this->saveToJson();
                 return true;
             }

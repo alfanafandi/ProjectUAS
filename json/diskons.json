@@ -44,7 +44,16 @@
             },
             "diskon_nama": "Diskon Tahun Baru",
             "diskon_presentase": "10"
+        },
+        {
+            "diskon_id": 6,
+            "diskon_restoran": {
+                "restoran_id": 6,
+                "restoran_nama": "Kebab Baba Rafi"
+            },
+            "diskon_nama": "Diskon Tanggal Tua",
+            "diskon_presentase": "12"
         }
     ],
-    "next_id": 6
+    "next_id": 7
 }

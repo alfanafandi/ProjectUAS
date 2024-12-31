@@ -37,7 +37,7 @@ $restoranLogin = $modelRestoran->getRestoranById($restoran_id_login);
             <!-- Formulir Input Menu -->
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Tambah Menu</h2>
-                <form action="/../../index.php?modul=menu&fitur=add" method="POST">
+                <form action="/../../index.php?modul=menu&fitur=add" method="POST" enctype="multipart/form-data">
 
                     <!-- Nama Restoran (Hanya untuk restoran yang login) -->
                     <div class="mb-4">
@@ -67,6 +67,12 @@ $restoranLogin = $modelRestoran->getRestoranById($restoran_id_login);
                     <div class="mb-4">
                         <label for="menu_harga" class="block text-gray-700 text-sm font-bold mb-2">Harga:</label>
                         <input type="number" id="menu_harga" name="menu_harga" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Harga Menu" required min="0">
+                    </div>
+
+                    <!-- Gambar Menu -->
+                    <div class="mb-4">
+                        <label for="menu_gambar" class="block text-gray-700 text-sm font-bold mb-2">Gambar Menu:</label>
+                        <input type="file" id="menu_gambar" name="menu_gambar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
 
                     <!-- Submit Button -->

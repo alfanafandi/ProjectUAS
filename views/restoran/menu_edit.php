@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php
-require_once 'model/menu_model.php';
-require_once 'model/restoran_model.php';
-$restoran_id_login = $_SESSION['user_id'];
+require_once __DIR__ . '/../../model/menu_model.php';
+require_once __DIR__ . '/../../model/restoran_model.php';
+$restoran_id_login = $_SESSION['restoran_id'];
 
 $obj_modelRestoran = new RestoranModel();
 $restoranLogin = $obj_modelRestoran->getRestoranById($restoran_id_login);
@@ -15,6 +12,8 @@ $menu_id = $_GET['id'];
 $menu = $obj_modelMenu->getMenuById($menu_id);
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -38,7 +37,7 @@ $menu = $obj_modelMenu->getMenuById($menu_id);
             <!-- Formulir Input Menu -->
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Menu</h2>
-                <form action="/../../index.php?modul=menu&fitur=update&id=<?php echo $menu->menu_id; ?>" method="POST">
+                <form action="/../../index.php?modul=menu&fitur=update&id=<?php echo $menu->menu_id; ?>" method="POST" enctype="multipart/form-data">
 
                     <!-- Nama Restoran -->
                     <div class="mb-4">
@@ -68,6 +67,12 @@ $menu = $obj_modelMenu->getMenuById($menu_id);
                     <div class="mb-4">
                         <label for="menu_harga" class="block text-gray-700 text-sm font-bold mb-2">Harga:</label>
                         <input type="number" id="menu_harga" name="menu_harga" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Harga Menu" required min="0">
+                    </div>
+
+                    <!-- Gambar Menu -->
+                    <div class="mb-4">
+                        <label for="menu_gambar" class="block text-gray-700 text-sm font-bold mb-2">Gambar Menu:</label>
+                        <input type="file" id="menu_gambar" name="menu_gambar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
 
                     <!-- Submit Button -->

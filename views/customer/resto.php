@@ -72,7 +72,10 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
 </head>
 
 <body class="bg-gray-100 min-h-screen m-0 p-0">
-    <?php include __DIR__ . '/../includes/navbar.php'; ?>
+    <!-- Navbar -->
+    <header class="sticky top-0 bg-white z-10">
+        <?php include __DIR__ . '/../includes/navbar.php'; ?>
+    </header>
 
     <main class="p-0 m-0 pb-20">
         <section class="bg-white p-6 rounded-lg shadow-md mb-6 flex justify-center">
@@ -101,10 +104,10 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
         </section>
 
         <section>
-            <h3 class="text-lg font-semibold mb-4">Menu</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <?php foreach ($menus_by_restoran as $menu): ?>
                     <div class="bg-white p-4 rounded-lg shadow-md">
+                        <img src="<?= htmlspecialchars($menu->menu_gambar); ?>" alt="<?= htmlspecialchars($menu->menu_nama); ?>" class="w-full h-32 object-contain rounded-lg mb-2">
                         <h4 class="font-bold text-md"><?= htmlspecialchars($menu->menu_nama); ?></h4>
                         <div class="flex justify-between items-center mt-2">
                             <span class="text-green-500 font-bold">Rp <?= number_format($menu->menu_harga, 0, ',', '.'); ?></span>

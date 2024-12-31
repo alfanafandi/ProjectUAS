@@ -202,7 +202,14 @@ switch ($modul) {
                     $nama = $_POST['menu_nama'];
                     $harga = $_POST['menu_harga'];
                     $kategori = $_POST['menu_kategori'];
-                    $objectMenu->addMenu($resto, $nama, $kategori, $harga);
+                    $gambar = $_FILES['menu_gambar']['name'];
+                    $uploadDir = 'uploads/menus/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0755, true);
+                    }
+                    $uploadFile = $uploadDir . basename($gambar);
+                    move_uploaded_file($_FILES['menu_gambar']['tmp_name'], $uploadFile);
+                    $objectMenu->addMenu($resto, $nama, $kategori, $harga, $uploadFile);
                 } else {
                     include 'views/menu_input.php';
                 }
@@ -216,7 +223,14 @@ switch ($modul) {
                     $nama = $_POST['menu_nama'];
                     $harga = $_POST['menu_harga'];
                     $kategori = $_POST['menu_kategori'];
-                    $objectMenu->updateMenu($id, $resto, $nama, $kategori, $harga);
+                    $gambar = $_FILES['menu_gambar']['name'];
+                    $uploadDir = 'uploads/menus/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0755, true);
+                    }
+                    $uploadFile = $uploadDir . basename($gambar);
+                    move_uploaded_file($_FILES['menu_gambar']['tmp_name'], $uploadFile);
+                    $objectMenu->updateMenu($id, $resto, $nama, $kategori, $harga, $uploadFile);
                 }
                 break;
             case 'delete':

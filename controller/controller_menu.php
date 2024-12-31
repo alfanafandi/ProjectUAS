@@ -20,9 +20,9 @@ class controllerMenu
         include 'views/restoran/menu_list.php';
     }
 
-    public function addMenu($menu_restoran, $menu_nama, $menu_kategori, $menu_harga)
+    public function addMenu($menu_restoran, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar)
     {
-        $this->menuModel->addMenu($menu_restoran, $menu_nama, $menu_kategori, $menu_harga);
+        $this->menuModel->addMenu($menu_restoran, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar);
         header('Location: index.php?modul=menu');
     }
 
@@ -32,9 +32,9 @@ class controllerMenu
         include 'views/restoran/menu_edit.php';
     }
 
-    public function updateMenu($menu_id, $menu_restoran, $menu_nama, $menu_kategori, $menu_harga)
+    public function updateMenu($menu_id, $menu_restoran, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar)
     {
-        $this->menuModel->updateMenu($menu_id, $menu_restoran, $menu_nama, $menu_kategori, $menu_harga);
+        $this->menuModel->updateMenu($menu_id, $menu_restoran, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar);
         header('Location: index.php?modul=menu');
     }
 

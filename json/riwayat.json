@@ -159,5 +159,19 @@
         ],
         "totalPrice": 36000,
         "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 4,
+        "items": [
+            {
+                "id": "9",
+                "name": "Ayam Paha",
+                "price": 20000,
+                "quantity": 1,
+                "restoran_id": "4"
+            }
+        ],
+        "totalPrice": 18000,
+        "timestamp": "2024-12-31"
     }
 ]
