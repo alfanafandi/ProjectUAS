@@ -1,0 +1,50 @@
+{
+    "diskons": [
+        {
+            "diskon_id": 1,
+            "diskon_restoran": {
+                "restoran_id": 1,
+                "restoran_nama": "Aiola"
+            },
+            "diskon_nama": "Diskon hari baik",
+            "diskon_presentase": "10"
+        },
+        {
+            "diskon_id": 2,
+            "diskon_restoran": {
+                "restoran_id": 2,
+                "restoran_nama": "Ayam Bakar Pak D"
+            },
+            "diskon_nama": "Diskon Ulang Tahun",
+            "diskon_presentase": 20
+        },
+        {
+            "diskon_id": 3,
+            "diskon_restoran": {
+                "restoran_id": 3,
+                "restoran_nama": "MC Donald"
+            },
+            "diskon_nama": "Diskon MCD",
+            "diskon_presentase": "5"
+        },
+        {
+            "diskon_id": 4,
+            "diskon_restoran": {
+                "restoran_id": 4,
+                "restoran_nama": "KFC"
+            },
+            "diskon_nama": "Diskon KFC",
+            "diskon_presentase": "10"
+        },
+        {
+            "diskon_id": 5,
+            "diskon_restoran": {
+                "restoran_id": 5,
+                "restoran_nama": "Kober Mie"
+            },
+            "diskon_nama": "Diskon Tahun Baru",
+            "diskon_presentase": "10"
+        }
+    ],
+    "next_id": 6
+}

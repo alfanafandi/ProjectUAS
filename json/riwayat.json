@@ -1,0 +1,128 @@
+[
+    {
+        "user_id": 4,
+        "items": [
+            {
+                "id": "2",
+                "name": "Ayam Bakar",
+                "price": 30000,
+                "quantity": 1,
+                "restoran_id": "1"
+            }
+        ],
+        "totalPrice": 24000,
+        "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "5",
+                "name": "Red Velvet",
+                "price": 15000,
+                "quantity": 1,
+                "restoran_id": "1"
+            }
+        ],
+        "totalPrice": 10500,
+        "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "7",
+                "name": "Pepsi",
+                "price": 10000,
+                "quantity": 1,
+                "restoran_id": "3"
+            },
+            {
+                "id": "8",
+                "name": "Kentang Goreng",
+                "price": 15000,
+                "quantity": 1,
+                "restoran_id": "3"
+            }
+        ],
+        "totalPrice": 20000,
+        "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "1",
+                "name": "Nasi Goreng",
+                "price": 20000,
+                "quantity": 2,
+                "restoran_id": "1"
+            }
+        ],
+        "totalPrice": 40000,
+        "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "12",
+                "name": "Mie Pedas Level 1",
+                "price": 11000,
+                "quantity": 1,
+                "restoran_id": "5"
+            },
+            {
+                "id": "13",
+                "name": "Es teh",
+                "price": 7000,
+                "quantity": 1,
+                "restoran_id": "5"
+            }
+        ],
+        "totalPrice": 12600,
+        "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "14",
+                "name": "Kebab Sapi Original",
+                "price": 22000,
+                "quantity": 1,
+                "restoran_id": "6"
+            }
+        ],
+        "totalPrice": 19800,
+        "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "14",
+                "name": "Kebab Sapi Original",
+                "price": 22000,
+                "quantity": 1,
+                "restoran_id": "6"
+            }
+        ],
+        "totalPrice": 17600,
+        "timestamp": "2024-12-31"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "14",
+                "name": "Kebab Sapi Original",
+                "price": 22000,
+                "quantity": 1,
+                "restoran_id": "6"
+            }
+        ],
+        "totalPrice": 22000,
+        "timestamp": "2024-12-31"
+    }
+]

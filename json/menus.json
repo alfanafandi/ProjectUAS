@@ -1,0 +1,185 @@
+{
+    "menus": [
+        {
+            "menu_id": 1,
+            "menu_restoran": {
+                "restoran_id": 1,
+                "restoran_nama": "Aiola",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/aiola.jpg"
+            },
+            "menu_nama": "Nasi Goreng",
+            "menu_kategori": "Makanan",
+            "menu_harga": 20000
+        },
+        {
+            "menu_id": 2,
+            "menu_restoran": {
+                "restoran_id": 1,
+                "restoran_nama": "Aiola",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/aiola.jpg"
+            },
+            "menu_nama": "Ayam Bakar",
+            "menu_kategori": "Makanan",
+            "menu_harga": 30000
+        },
+        {
+            "menu_id": 3,
+            "menu_restoran": {
+                "restoran_id": 2,
+                "restoran_nama": "Ayam Bakar Pak D",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/ayam_bakar_pak_d.jpg"
+            },
+            "menu_nama": "Coca-cola",
+            "menu_kategori": "Makanan",
+            "menu_harga": 30000
+        },
+        {
+            "menu_id": 5,
+            "menu_restoran": {
+                "restoran_id": 1,
+                "restoran_nama": "Aiola",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/aiola.jpg"
+            },
+            "menu_nama": "Roti Bakar",
+            "menu_kategori": "Makanan",
+            "menu_harga": "12000"
+        },
+        {
+            "menu_id": 5,
+            "menu_restoran": {
+                "restoran_id": 1,
+                "restoran_nama": "Aiola",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/aiola.jpg"
+            },
+            "menu_nama": "Red Velvet",
+            "menu_kategori": "Minuman",
+            "menu_harga": "15000"
+        },
+        {
+            "menu_id": 6,
+            "menu_restoran": {
+                "restoran_id": 3,
+                "restoran_nama": "MC Donald",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/mc_donald.jpg"
+            },
+            "menu_nama": "Burger",
+            "menu_kategori": "Makanan",
+            "menu_harga": "25000"
+        },
+        {
+            "menu_id": 7,
+            "menu_restoran": {
+                "restoran_id": 3,
+                "restoran_nama": "MC Donald",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/mc_donald.jpg"
+            },
+            "menu_nama": "Pepsi",
+            "menu_kategori": "Minuman",
+            "menu_harga": "10000"
+        },
+        {
+            "menu_id": 8,
+            "menu_restoran": {
+                "restoran_id": 3,
+                "restoran_nama": "MC Donald",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/mc_donald.jpg"
+            },
+            "menu_nama": "Kentang Goreng",
+            "menu_kategori": "Makanan",
+            "menu_harga": "15000"
+        },
+        {
+            "menu_id": 9,
+            "menu_restoran": {
+                "restoran_id": 4,
+                "restoran_nama": "KFC",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/6771b009e155e_kfc.jpg"
+            },
+            "menu_nama": "Ayam Paha",
+            "menu_kategori": "Makanan",
+            "menu_harga": "20000"
+        },
+        {
+            "menu_id": 10,
+            "menu_restoran": {
+                "restoran_id": 4,
+                "restoran_nama": "KFC",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/6771b009e155e_kfc.jpg"
+            },
+            "menu_nama": "Ayam Dada",
+            "menu_kategori": "Makanan",
+            "menu_harga": "25000"
+        },
+        {
+            "menu_id": 11,
+            "menu_restoran": {
+                "restoran_id": 4,
+                "restoran_nama": "KFC",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/6771b009e155e_kfc.jpg"
+            },
+            "menu_nama": "Coca-cola",
+            "menu_kategori": "Minuman",
+            "menu_harga": "7000"
+        },
+        {
+            "menu_id": 12,
+            "menu_restoran": {
+                "restoran_id": 5,
+                "restoran_nama": "Kober Mie",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/6773d8477fdf3_kober_mie.png"
+            },
+            "menu_nama": "Mie Pedas Level 1",
+            "menu_kategori": "Makanan",
+            "menu_harga": "11000"
+        },
+        {
+            "menu_id": 13,
+            "menu_restoran": {
+                "restoran_id": 5,
+                "restoran_nama": "Kober Mie",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/6773d8477fdf3_kober_mie.png"
+            },
+            "menu_nama": "Es teh",
+            "menu_kategori": "Minuman",
+            "menu_harga": "7000"
+        },
+        {
+            "menu_id": 14,
+            "menu_restoran": {
+                "restoran_id": 6,
+                "restoran_nama": "Kebab Baba Rafi",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/6773daed6bd4f_kebab_turki_baba_rafi.png"
+            },
+            "menu_nama": "Kebab Sapi Original",
+            "menu_kategori": "Makanan",
+            "menu_harga": "22000"
+        },
+        {
+            "menu_id": 15,
+            "menu_restoran": {
+                "restoran_id": 6,
+                "restoran_nama": "Kebab Baba Rafi",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/6773daed6bd4f_kebab_turki_baba_rafi.png"
+            },
+            "menu_nama": "Kebab Sapi Keju",
+            "menu_kategori": "Makanan",
+            "menu_harga": "25000"
+        }
+    ],
+    "next_id": 16
+}

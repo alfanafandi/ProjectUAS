@@ -1,0 +1,79 @@
+[
+    {
+        "transaksi_id": 1,
+        "nama_pengguna": {
+            "user_id": 3,
+            "user_username": "customer",
+            "user_password": "customer123",
+            "saldo": 20000
+        },
+        "jumlah_topup": 100000,
+        "status": "Approved"
+    },
+    {
+        "transaksi_id": 2,
+        "nama_pengguna": {
+            "user_id": 3,
+            "user_username": "customer",
+            "user_password": "customer123",
+            "saldo": 20000
+        },
+        "jumlah_topup": 50000,
+        "status": "Approved"
+    },
+    {
+        "transaksi_id": 3,
+        "nama_pengguna": {
+            "user_id": 3,
+            "user_username": "customer",
+            "user_password": "customer123",
+            "saldo": 20000
+        },
+        "jumlah_topup": 100000,
+        "status": "Approved"
+    },
+    {
+        "transaksi_id": 4,
+        "nama_pengguna": {
+            "user_id": 3,
+            "user_username": "customer",
+            "user_password": "customer123",
+            "saldo": 0
+        },
+        "jumlah_topup": 100000,
+        "status": "Approved"
+    },
+    {
+        "transaksi_id": 5,
+        "nama_pengguna": {
+            "user_id": 3,
+            "user_username": "customer",
+            "user_password": "customer123",
+            "saldo": 81950
+        },
+        "jumlah_topup": 50000,
+        "status": "Approved"
+    },
+    {
+        "transaksi_id": 6,
+        "nama_pengguna": {
+            "user_id": 3,
+            "user_username": "customer",
+            "user_password": "customer123",
+            "saldo": 59700
+        },
+        "jumlah_topup": 50000,
+        "status": "Approved"
+    },
+    {
+        "transaksi_id": 7,
+        "nama_pengguna": {
+            "user_id": 3,
+            "user_username": "customer",
+            "user_password": "customer123",
+            "saldo": 109700
+        },
+        "jumlah_topup": 12000,
+        "status": "Approved"
+    }
+]

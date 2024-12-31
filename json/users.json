@@ -1,0 +1,26 @@
+[
+    {
+        "user_id": 1,
+        "user_username": "admin",
+        "user_password": "admin123",
+        "saldo": 0
+    },
+    {
+        "user_id": 2,
+        "user_username": "restoran",
+        "user_password": "restoran123",
+        "saldo": 0
+    },
+    {
+        "user_id": 3,
+        "user_username": "customer",
+        "user_password": "customer123",
+        "saldo": 478000
+    },
+    {
+        "user_id": 4,
+        "user_username": "alfan",
+        "user_password": "123",
+        "saldo": 561776
+    }
+]

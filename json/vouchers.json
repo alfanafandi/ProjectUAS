@@ -1,0 +1,17 @@
+[
+    {
+        "voucher_id": 1,
+        "kode": "0777",
+        "diskon": 20
+    },
+    {
+        "voucher_id": 2,
+        "kode": "1234",
+        "diskon": 10
+    },
+    {
+        "voucher_id": 3,
+        "kode": "4321",
+        "diskon": 15
+    }
+]
