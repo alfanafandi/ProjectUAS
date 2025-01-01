@@ -31,7 +31,6 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($restoran->restoran_nama); ?> - Restoo</title>
     <link rel="icon" href="../image/logo.png" type="image/x-icon">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         #keranjang-bar-wrapper {
@@ -40,11 +39,18 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
             left: 0;
             width: 100%;
             background-color: white;
-            display: flex;
+            display: none;
+            /* Initially hidden */
             justify-content: center;
             align-items: center;
-            padding: 10px 0;
+            padding: 5px 0;
+            /* Adjust padding to make it flatter */
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #keranjang-bar-wrapper.visible {
+            display: flex;
+            /* Show when visible class is added */
         }
 
         #keranjang-bar {
@@ -53,9 +59,17 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
             display: none;
             opacity: 0;
             background-color: #28a745;
-            border-radius: 10px;
-            padding: 10px 40px;
+            width: 50%;
+            /* Make the cart bar wider */
+            border-radius: 50px;
+            /* Round the edges more */
+            padding: 5px 20px;
+            height: 40px;
+            /* Adjust padding to make it flatter */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         #keranjang-bar.visible {
@@ -65,8 +79,24 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
         }
 
         #keranjang-info {
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             font-weight: bold;
+            flex-grow: 1;
+        }
+
+        #keranjang-bar .restoran-name {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #ffffff;
+        }
+
+        #keranjang-bar .shopping-bag-icon {
+            width: 24px;
+            height: 24px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png');
+            /* Use a different icon library */
+            background-size: contain;
+            background-repeat: no-repeat;
         }
     </style>
 </head>
@@ -124,8 +154,15 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
     </main>
 
     <div id="keranjang-bar-wrapper">
-        <div id="keranjang-bar" class="text-white px-8 py-3 hidden flex justify-center items-center cursor-pointer">
-            <span id="keranjang-info" class="text-l font-semibold">0 Item - Rp 0</span>
+        <div id="keranjang-bar" class="text-white px-8 py-3 hidden flex justify-between items-center cursor-pointer">
+            <div>
+                <span id="keranjang-info" class="text-l font-semibold">0 Item</span>
+                <div class="restoran-name"><?= htmlspecialchars($restoran->restoran_nama); ?></div>
+            </div>
+            <div class="flex items-center">
+                <span id="keranjang-price" class="text-l font-semibold">Rp 0</span>
+                <span class="shopping-bag-icon ml-2"></span>
+            </div>
         </div>
     </div>
 
@@ -156,11 +193,15 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
                 let totalItems = keranjangItems.reduce((acc, item) => acc + item.quantity, 0);
                 let totalPrice = keranjangItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-                document.getElementById('keranjang-info').innerText = `${totalItems} Item - Rp ${totalPrice.toLocaleString('id-ID')}`;
+                document.getElementById('keranjang-info').innerText = `${totalItems} Item`;
+                document.getElementById('keranjang-price').innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
 
                 const keranjangBar = document.getElementById('keranjang-bar');
                 keranjangBar.classList.add('visible');
                 keranjangBar.style.display = 'flex';
+
+                const keranjangWrapper = document.getElementById('keranjang-bar-wrapper');
+                keranjangWrapper.classList.add('visible');
             });
         });
 

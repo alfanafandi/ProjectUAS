@@ -69,24 +69,14 @@ class controllerPengguna
             $riwayatData = json_decode(file_get_contents($riwayatFilePath), true);
         }
 
-        $isDuplicate = false;
-        foreach ($riwayatData as $entry) {
-            if ($entry['user_id'] === $user_id && $entry['items'] === $keranjangItems && $entry['totalPrice'] === $totalPrice) {
-                $isDuplicate = true;
-                break;
-            }
-        }
+        $riwayatData[] = [
+            'user_id' => $user_id,
+            'items' => $keranjangItems,
+            'totalPrice' => $totalPrice,
+            'timestamp' => date('Y-m-d')
+        ];
 
-        if (!$isDuplicate) {
-            $riwayatData[] = [
-                'user_id' => $user_id,
-                'items' => $keranjangItems,
-                'totalPrice' => $totalPrice,
-                'timestamp' => date('Y-m-d')
-            ];
-
-            file_put_contents($riwayatFilePath, json_encode($riwayatData, JSON_PRETTY_PRINT));
-        }
+        file_put_contents($riwayatFilePath, json_encode($riwayatData, JSON_PRETTY_PRINT));
     }
 
     public function getSaldo($user_id)

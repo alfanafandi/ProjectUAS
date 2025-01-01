@@ -1,41 +1,41 @@
 {
-    "restorans": [
-        {
-            "restoran_id": 1,
-            "restoran_nama": "Aiola",
-            "restoran_password": "123",
-            "restoran_gambar": "uploads\/restorans\/aiola.jpg"
-        },
-        {
-            "restoran_id": 2,
-            "restoran_nama": "Ayam Bakar Pak D",
-            "restoran_password": "123",
-            "restoran_gambar": "uploads\/restorans\/6773e33b3f49a_ayam_bakar_pak_D.png"
-        },
-        {
-            "restoran_id": 3,
-            "restoran_nama": "MC Donald",
-            "restoran_password": "123",
-            "restoran_gambar": "uploads\/restorans\/mc_donald.jpg"
-        },
-        {
-            "restoran_id": 4,
-            "restoran_nama": "KFC",
-            "restoran_password": "123",
-            "restoran_gambar": "uploads\/restorans\/6771b009e155e_kfc.jpg"
-        },
-        {
-            "restoran_id": 5,
-            "restoran_nama": "Kober Mie",
-            "restoran_password": "123",
-            "restoran_gambar": "uploads\/restorans\/6773d8477fdf3_kober_mie.png"
-        },
-        {
-            "restoran_id": 6,
-            "restoran_nama": "Kebab Baba Rafi",
-            "restoran_password": "123",
-            "restoran_gambar": "uploads\/restorans\/6773daed6bd4f_kebab_turki_baba_rafi.png"
-        }
-    ],
-    "next_id": 7
+  "restorans": [
+    {
+      "restoran_id": 1,
+      "restoran_nama": "Aiola",
+      "restoran_password": "123",
+      "restoran_gambar": "uploads/restorans/aiola.jpg"
+    },
+    {
+      "restoran_id": 2,
+      "restoran_nama": "Ayam Bakar Pak D",
+      "restoran_password": "123",
+      "restoran_gambar": "uploads/restorans/6773e33b3f49a_ayam_bakar_pak_D.png"
+    },
+    {
+      "restoran_id": 3,
+      "restoran_nama": "MC Donald",
+      "restoran_password": "123",
+      "restoran_gambar": "uploads/restorans/mc_donald.jpg"
+    },
+    {
+      "restoran_id": 4,
+      "restoran_nama": "KFC",
+      "restoran_password": "123",
+      "restoran_gambar": "uploads/restorans/6771b009e155e_kfc.jpg"
+    },
+    {
+      "restoran_id": 5,
+      "restoran_nama": "Kober Mie",
+      "restoran_password": "123",
+      "restoran_gambar": "uploads/restorans/6773d8477fdf3_kober_mie.png"
+    },
+    {
+      "restoran_id": 6,
+      "restoran_nama": "Kebab Baba Rafi",
+      "restoran_password": "123",
+      "restoran_gambar": "uploads/restorans/6773daed6bd4f_kebab_turki_baba_rafi.png"
+    }
+  ],
+  "next_id": 7
 }

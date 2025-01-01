@@ -20,13 +20,13 @@
     <div class="w-screen p-0 m-0">
         <!-- Saldo dan Promo -->
         <div class="bg-white p-6 rounded-lg shadow-md mb-6 w-full">
-            <div class="bg-gradient-to-r from-blue-400 to-blue-500 p-4 rounded-lg shadow-md">
+            <div class="bg-gradient-to-r from-teal-400 to-teal-500 p-4 rounded-lg shadow-md">
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-lg font-semibold text-white">Saldo Anda</h2>
                         <p class="text-white text-xl font-bold"><?php echo "Rp " . number_format($saldo, 0, ',', '.'); ?></p>
                     </div>
-                    <a href="/index.php?modul=saldo" class="bg-white text-blue-500 text-l py-2 px-4 rounded-lg shadow-md hover:bg-gray-200 transition">Isi Saldo</a>
+                    <a href="/index.php?modul=saldo" class="bg-white text-teal-500 text-l py-2 px-4 rounded-lg shadow-md hover:bg-gray-200 transition">Isi Saldo</a>
                 </div>
             </div>
             <!-- Promo Hari Ini -->
@@ -36,8 +36,8 @@
                     <?php if (!empty($vouchers)) : ?>
                         <?php foreach ($vouchers as $voucher) : ?>
                             <div class="bg-gradient-to-r from-green-400 to-green-500 p-4 rounded-lg text-white shadow-sm min-w-[160px] w-full flex items-center justify-between">
-                                <p class="font-semibold text-black">Kode : <?php echo $voucher->kode; ?></p> <!-- Teks sejajar kiri -->
-                                <p class="text-black mt-1"><?php echo $voucher->diskon ?>% Diskon</p> <!-- Teks sejajar kanan -->
+                                <p class="text-gray-800">Kode : <?php echo $voucher->kode; ?></p> <!-- Teks sejajar kiri -->
+                                <p class="text-gray-800 mt-1"><?php echo $voucher->diskon ?>% Diskon</p> <!-- Teks sejajar kanan -->
                             </div>
                         <?php endforeach; ?>
                     <?php else : ?>
@@ -54,6 +54,9 @@
                             <a href="index.php?modul=belanja&id=<?php echo $restoran->restoran_id; ?>" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition max-w-xs mx-auto">
                                 <img src="<?php echo $restoran->restoran_gambar; ?>" alt="<?php echo htmlspecialchars($restoran->restoran_nama); ?>" class="w-full h-32 object-cover rounded-lg mb-2">
                                 <h4 class="text-md font-bold"><?php echo htmlspecialchars($restoran->restoran_nama); ?></h4>
+                                <script>
+                                    console.log("Image path: <?php echo $restoran->restoran_gambar; ?>");
+                                </script>
                             </a>
                         <?php endforeach; ?>
                     <?php else : ?>

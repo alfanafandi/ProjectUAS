@@ -1,5 +1,8 @@
 <?php
-$username = $_SESSION['username'];
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +32,7 @@ $username = $_SESSION['username'];
             /* Percepat animasi menjadi 0.15s */
         }
     </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
         // Script untuk toggle dropdown
         function toggleDropdown() {
@@ -41,7 +45,7 @@ $username = $_SESSION['username'];
 
 <body class="bg-gray-100">
     <!-- Navbar -->
-    <nav class="bg-white shadow-sm w-full px-4 py-3 flex items-center justify-between">
+    <nav class="bg-white shadow-sm w-full px-9 pr-4 py-3 flex items-center justify-between">
         <!-- Kiri: Logo dan Menu -->
         <div class="flex items-center space-x-6">
             <!-- Logo -->
@@ -60,21 +64,28 @@ $username = $_SESSION['username'];
         </div>
 
         <!-- Kanan: Ikon Pencarian dan Profil -->
-        <!-- Profil dengan Dropdown -->
-        <div class="relative">
-            <div onclick="toggleDropdown()" class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-semibold cursor-pointer">
-                <?= htmlspecialchars(substr($username, 0, 2)); ?>
-            </div>
-            <!-- Dropdown Menu -->
-            <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2">
-                <div class="px-4 py-2 text-sm text-gray-700">
-                    <strong><?= htmlspecialchars($username); ?></strong>
+        <div class="flex items-center space-x-4">
+            <!-- Tombol Pencarian -->
+            <a href="/views/customer/search.php" class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </a>
+            <!-- Profil dengan Dropdown -->
+            <div class="relative">
+                <div onclick="toggleDropdown()" class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-semibold cursor-pointer">
+                    <?= htmlspecialchars(substr($username, 0, 2)); ?>
                 </div>
-                <hr class="my-2">
-                <a href="index.php?modul=riwayat" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Pembelian</a>
-                <a href="index.php?modul=logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Keluar</a>
+                <!-- Dropdown Menu -->
+                <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2">
+                    <div class="px-4 py-2 text-sm text-gray-700">
+                        <strong><?= htmlspecialchars($username); ?></strong>
+                    </div>
+                    <hr class="my-2">
+                    <a href="index.php?modul=riwayat" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Pembelian</a>
+                    <a href="index.php?modul=logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Keluar</a>
+                </div>
             </div>
-        </div>
         </div>
     </nav>
 </body>
