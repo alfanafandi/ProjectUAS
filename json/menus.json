@@ -233,7 +233,20 @@
             "menu_kategori": "Minuman",
             "menu_harga": "7000",
             "menu_gambar": "uploads\/menus\/teh-pucuk.webp"
+        },
+        {
+            "menu_id": 19,
+            "menu_restoran": {
+                "restoran_id": 1,
+                "restoran_nama": "Aiola",
+                "restoran_password": "123",
+                "restoran_gambar": "uploads\/restorans\/aiola.jpg"
+            },
+            "menu_nama": "Mie Goreng",
+            "menu_kategori": "Makanan",
+            "menu_harga": "7000",
+            "menu_gambar": "uploads\/menus\/kebab-sapi.webp"
         }
     ],
-    "next_id": 19
+    "next_id": 20
 }

@@ -110,5 +110,26 @@
         ],
         "totalPrice": 18400,
         "timestamp": "2025-01-01"
+    },
+    {
+        "user_id": 3,
+        "items": [
+            {
+                "id": "1",
+                "name": "Siomay & Batagor Campur",
+                "price": 23000,
+                "quantity": 1,
+                "restoran_id": "1"
+            },
+            {
+                "id": "5",
+                "name": "Es Degan",
+                "price": 10000,
+                "quantity": 1,
+                "restoran_id": "1"
+            }
+        ],
+        "totalPrice": 26400,
+        "timestamp": "2025-01-02"
     }
 ]
