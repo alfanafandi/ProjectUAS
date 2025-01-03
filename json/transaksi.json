@@ -75,5 +75,16 @@
         },
         "jumlah_topup": 12000,
         "status": "Approved"
+    },
+    {
+        "transaksi_id": 8,
+        "nama_pengguna": {
+            "user_id": 4,
+            "user_username": "alfan",
+            "user_password": "123",
+            "saldo": 232376
+        },
+        "jumlah_topup": 99999,
+        "status": "Approved"
     }
 ]
