@@ -11,7 +11,7 @@ class controllerDiskon
     public function __construct(RestoranModel $restoranModel)
     {
         $this->restoranModel = $restoranModel;
-        $this->diskonModel = new DiskonModel($this->restoranModel);
+        $this->diskonModel = new DiskonModel();
     }
 
     public function listDiskonsByRestoran($restoran_id)
@@ -23,7 +23,7 @@ class controllerDiskon
     public function addDiskon($restoran_id, $diskon_nama, $diskon_presentase)
     {
         $this->diskonModel->addDiskon($restoran_id, $diskon_nama, $diskon_presentase);
-        header("Location: index.php?modul=diskon");
+        header("Location: index.php?modul=diskon&fitur=list&restoran_id=" . $restoran_id);
     }
 
     public function editById($diskon_id)
@@ -39,16 +39,17 @@ class controllerDiskon
     public function deleteDiskon($diskon_id)
     {
         $result = $this->diskonModel->deleteDiskon($diskon_id);
-        if ($result) {
-            header("Location: index.php?modul=diskon");
-        }
+        header("Location: index.php?modul=diskon&fitur=list&restoran_id=" . $_GET['restoran_id']);
     }
 
     public function updateDiskon($diskon_id, $restoran_id, $diskon_nama, $diskon_presentase)
     {
         $result = $this->diskonModel->updateDiskon($diskon_id, $restoran_id, $diskon_nama, $diskon_presentase);
-        if ($result) {
-            header("Location: index.php?modul=diskon");
-        }
+        header("Location: index.php?modul=diskon&fitur=list&restoran_id=" . $restoran_id);
+    }
+
+    public function getDiskonsByRestoran($restoran_id)
+    {
+        return $this->diskonModel->getDiskonsByRestoran($restoran_id);
     }
 }

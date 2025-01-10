@@ -50,15 +50,15 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
         <div class="flex items-center space-x-6">
             <!-- Logo -->
             <div class="flex items-center space-x-2">
-                <a href="/index.php?modul=customer_dashboard" class="flex items-center space-x-2">
-                    <img src="/image/logo.png" alt="Logo Restoo" class="w-8 h-8">
+                <a href="index.php?modul=customer_dashboard" class="flex items-center space-x-2">
+                    <img src="image/logo.png" alt="Logo Restoo" class="w-8 h-8">
                     <span class="text-2xl font-bold">Restoo</span>
                 </a>
             </div>
             <!-- Menu -->
             <ul class="flex space-x-6 text-gray-600 font-medium">
                 <li>
-                    <a href="/index.php?modul=rekomendasi" class="hover:text-black">Rekomendasi</a>
+                    <a href="index.php?modul=rekomendasi" class="hover:text-black">Rekomendasi</a>
                 </li>
             </ul>
         </div>

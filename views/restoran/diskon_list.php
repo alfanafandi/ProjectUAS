@@ -1,3 +1,13 @@
+<?php
+require_once __DIR__ . '/../../model/diskon_model.php';
+require_once __DIR__ .  '/../../model/restoran_model.php';
+
+$modelRestoran = new RestoranModel();
+$modelDiskon = new DiskonModel();
+$restoran_id = $_SESSION['restoran_id'];
+$diskons = $modelDiskon->getDiskonsByRestoran($restoran_id);
+?>
+
 <!-- Diskon Management -->
 <!DOCTYPE html>
 <html lang="en">
@@ -33,29 +43,29 @@
                     <table class="min-w-full bg-white">
                         <thead class="bg-gradient-to-r from-gray-800 to-gray-700 text-white">
                             <tr>
-                                <th class="py-3 px-4 uppercase font-semibold text-sm">Diskon ID</th>
-                                <th class="py-3 px-4 uppercase font-semibold text-sm">Nama Restoran</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm">Urutan</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Nama Diskon</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Persentase</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-700">
-                            <?php if (!empty($diskons)) {
+                            <?php
+                            if (!empty($diskons)) {
+                                $queue = 1;
                                 foreach ($diskons as $discount) { ?>
                                     <tr class="text-center border-b border-gray-300 transition duration-200 ease-in-out hover:bg-gray-200">
-                                        <td class="py-3 px-4 text-blue-600"><?php echo htmlspecialchars($discount->diskon_id); ?></td>
-                                        <td class="py-3 px-4"><?php echo htmlspecialchars($discount->diskon_restoran->restoran_nama); ?></td>
-                                        <td class="py-3 px-4"><?php echo htmlspecialchars($discount->diskon_nama); ?></td>
+                                        <td class="py-3 px-4 text-blue-600"><?php echo $queue++; ?></td>
+                                        <td class="py-3 px-4"><?php echo htmlspecialchars($discount['diskon_nama']); ?></td>
                                         <td class="py-3 px-4">
-                                            <?php echo htmlspecialchars($discount->diskon_presentase); ?>%
+                                            <?php echo htmlspecialchars($discount['diskon_presentase']); ?>%
                                         </td>
                                         <td class="py-3 px-4">
                                             <button class="bg-green-200 hover:bg-green-300 text-green-700 font-semibold py-1 px-3 rounded-md transition duration-200">
-                                                <a href="index.php?modul=diskon&fitur=edit&id=<?php echo $discount->diskon_id; ?>" class="block">Update</a>
+                                                <a href="index.php?modul=diskon&fitur=edit&id=<?php echo $discount['diskon_id']; ?>&restoran_id=<?php echo $restoran_id; ?>" class="block">Update</a>
                                             </button>
                                             <button class="bg-red-200 hover:bg-red-300 text-red-700 font-semibold py-1 px-3 rounded-md transition duration-200">
-                                                <a href="index.php?modul=diskon&fitur=delete&id=<?php echo $discount->diskon_id; ?>&restoran_id=<?php echo $discount->diskon_restoran->restoran_id; ?>" class="block" onclick="return confirm('Apakah anda yakin ingin menghapus diskon ini?');">Delete</a>
+                                                <a href="index.php?modul=diskon&fitur=delete&id=<?php echo $discount['diskon_id']; ?>&restoran_id=<?php echo $restoran_id; ?>" class="block" onclick="return confirm('Apakah anda yakin ingin menghapus diskon ini?');">Delete</a>
                                             </button>
                                         </td>
                                     </tr>

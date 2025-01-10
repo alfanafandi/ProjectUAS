@@ -33,8 +33,7 @@
                     <table class="min-w-full bg-white">
                         <thead class="bg-gradient-to-r from-gray-800 to-gray-700 text-white">
                             <tr>
-                                <th class="py-3 px-4 uppercase font-semibold text-sm">Menu ID</th>
-                                <th class="py-3 px-4 uppercase font-semibold text-sm">Nama Restoran</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm">Urutan</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Nama Menu</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Kategori</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Harga</th>
@@ -43,19 +42,19 @@
                         </thead>
                         <tbody class="text-gray-700">
                             <?php if (!empty($menuRestoran)) {
+                                $queue = 1;
                                 foreach ($menuRestoran as $menu) { ?>
                                     <tr class="text-center border-b border-gray-300 transition duration-200 ease-in-out hover:bg-gray-200">
-                                        <td class="py-3 px-4 text-blue-600"> <?php echo htmlspecialchars($menu->menu_id); ?> </td>
-                                        <td class="py-3 px-4"> <?php echo htmlspecialchars($menu->menu_restoran->restoran_nama); ?> </td>
-                                        <td class="py-3 px-4"> <?php echo htmlspecialchars($menu->menu_nama); ?> </td>
-                                        <td class="py-3 px-4"> <?php echo htmlspecialchars($menu->menu_kategori); ?> </td>
-                                        <td class="py-3 px-4">Rp<?php echo htmlspecialchars($menu->menu_harga); ?> </td>
+                                        <td class="py-3 px-4 text-blue-600"> <?php echo $queue++; ?> </td>
+                                        <td class="py-3 px-4"> <?php echo htmlspecialchars($menu['menu_nama']); ?> </td>
+                                        <td class="py-3 px-4"> <?php echo htmlspecialchars($menu['menu_kategori']); ?> </td>
+                                        <td class="py-3 px-4">Rp<?php echo htmlspecialchars($menu['menu_harga']); ?> </td>
                                         <td class="py-3 px-4">
                                             <button class="bg-green-200 hover:bg-green-300 text-green-700 font-semibold py-1 px-3 rounded-md transition duration-200">
-                                                <a href="index.php?modul=menu&fitur=edit&id=<?php echo $menu->menu_id; ?>" class="block">Update</a>
+                                                <a href="index.php?modul=menu&fitur=edit&id=<?php echo $menu['menu_id']; ?>" class="block">Update</a>
                                             </button>
                                             <button class="bg-red-200 hover:bg-red-300 text-red-700 font-semibold py-1 px-3 rounded-md transition duration-200">
-                                                <a href="index.php?modul=menu&fitur=delete&id=<?php echo $menu->menu_id; ?>" class="block" onclick="return confirm('Apakah Anda yakin ingin menghapus menu ini?');">Delete</a>
+                                                <a href="index.php?modul=menu&fitur=delete&id=<?php echo $menu['menu_id']; ?>" class="block" onclick="return confirm('Apakah Anda yakin ingin menghapus menu ini?');">Delete</a>
                                             </button>
                                         </td>
                                     </tr>

@@ -51,7 +51,6 @@ class ControllerRestoran
         }
     }
 
-
     public function updateRestoran($id, $restoran_nama, $restoran_password, $restoran_gambar)
     {
         $result = $this->restoranModel->updateRestoran($id, $restoran_nama, $restoran_password, $restoran_gambar);

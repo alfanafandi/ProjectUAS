@@ -20,6 +20,7 @@ if ($query) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
+    <link rel="icon" href="image\logo.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/@heroicons/react/outline" rel="stylesheet">
 </head>

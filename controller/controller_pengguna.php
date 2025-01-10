@@ -17,10 +17,16 @@ class controllerPengguna
         include 'views/admin/pengguna_list.php';
     }
 
-    public function addPengguna($user_username, $user_password, $saldo)
+    public function addPengguna($user_username, $user_password, $saldo = 0)
     {
         $this->penggunaModel->addUser($user_username, $user_password, $saldo);
         header('Location: index.php?modul=pengguna');
+    }
+
+    public function registerPengguna($user_username, $user_password)
+    {
+        $this->penggunaModel->registerUser($user_username, $user_password, 0); // Ensure saldo is set to 0
+        header('Location: index.php?modul=login');
     }
 
     public function editById($user_id)
@@ -38,11 +44,7 @@ class controllerPengguna
     public function deletePengguna($user_id)
     {
         $result = $this->penggunaModel->deleteUser($user_id);
-        if (!$result) {
-            throw new Exception('Pengguna tidak ditemukan.');
-        } else {
-            header('Location: /index.php?modul=pengguna');
-        }
+        header('Location: index.php?modul=pengguna');
     }
 
 
@@ -58,26 +60,39 @@ class controllerPengguna
     public function updateSaldoMin($user_id, $amount)
     {
         $result = $this->penggunaModel->updateSaldoMin($user_id, $amount);
+        if (!$result) {
+            throw new Exception("Saldo tidak dapat diperbarui. Pengguna dengan ID {$user_id} tidak ditemukan.");
+        }
     }
 
     function addRiwayat($user_id, $keranjangItems, $totalPrice)
     {
-        $riwayatFilePath = __DIR__ . '/../json/riwayat.json';
+        // Koneksi ke database
+        $host = 'localhost'; // Ganti sesuai konfigurasi
+        $db = 'ProjectDB'; // Ganti dengan nama database Anda
+        $user = 'root'; // Ganti jika username database berbeda
+        $password = ''; // Ganti jika ada password
+        $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 
-        $riwayatData = [];
-        if (file_exists($riwayatFilePath)) {
-            $riwayatData = json_decode(file_get_contents($riwayatFilePath), true);
+        try {
+            $pdo = new PDO($dsn, $user, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // Masukkan data ke tabel riwayat
+            $query = "INSERT INTO riwayat (user_id, items, total_price) VALUES (:user_id, :items, :total_price)";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([
+                ':user_id' => $user_id,
+                ':items' => json_encode($keranjangItems), // Simpan items dalam format JSON
+                ':total_price' => $totalPrice
+            ]);
+
+            return true; // Berhasil
+        } catch (PDOException $e) {
+            die("Error: " . $e->getMessage());
         }
-
-        $riwayatData[] = [
-            'user_id' => $user_id,
-            'items' => $keranjangItems,
-            'totalPrice' => $totalPrice,
-            'timestamp' => date('Y-m-d')
-        ];
-
-        file_put_contents($riwayatFilePath, json_encode($riwayatData, JSON_PRETTY_PRINT));
     }
+
 
     public function getSaldo($user_id)
     {

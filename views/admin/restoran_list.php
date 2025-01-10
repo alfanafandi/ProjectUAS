@@ -34,16 +34,17 @@
                     <table class="min-w-full bg-white">
                         <thead class="bg-gradient-to-r from-gray-800 to-gray-700 text-white">
                             <tr>
-                                <th class="py-3 px-4 uppercase font-semibold text-sm">Restoran ID</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm">Urutan</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Restoran Name</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-700">
                             <?php if (!empty($restorans)) {
+                                $queue = 1;
                                 foreach ($restorans as $restoran) { ?>
                                     <tr class="text-center border-b border-gray-300 transition duration-200 ease-in-out hover:bg-gray-200">
-                                        <td class="py-3 px-4 text-blue-600"><?php echo htmlspecialchars($restoran->restoran_id); ?></td>
+                                        <td class="py-3 px-4 text-blue-600"><?php echo $queue++; ?></td>
                                         <td class="py-3 px-4"><?php echo htmlspecialchars($restoran->restoran_nama); ?></td>
                                         <td class="py-3 px-4">
                                             <button class="bg-green-200 hover:bg-green-300 text-green-700 font-semibold py-1 px-3 rounded-md transition duration-200">

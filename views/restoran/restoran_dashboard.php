@@ -42,17 +42,17 @@ if (file_exists($jsonFilePathRestoran)) {
             <h2 class="text-3xl font-bold mb-6 text-gray-800">Dashboard Resto</h2>
 
             <!-- Statistik Utama -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-8">
                 <!-- Total Pengguna -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
                     <h3 class="text-lg font-semibold text-gray-800">Total Menu</h3>
-                    <p class="text-4xl font-bold text-blue-500 mt-2"><?= $totalMenu; ?></p>
+                    <p class="text-5xl font-bold text-blue-500 mt-4"><?= $totalMenu; ?></p>
                 </div>
 
                 <!-- Total Restoran -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
                     <h3 class="text-lg font-semibold text-gray-800">Total Diskon</h3>
-                    <p class="text-4xl font-bold text-yellow-500 mt-2"><?= count($diskonRestoran); ?></p>
+                    <p class="text-5xl font-bold text-yellow-500 mt-4"><?= count($diskonRestoran); ?></p>
                 </div>
             </div>
         </main>

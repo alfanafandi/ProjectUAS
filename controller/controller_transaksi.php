@@ -29,31 +29,16 @@ class ControllerTransaksi
     {
         $this->transaksiModel->approveTransaksi($id);
 
-        if (isset($_SESSION['user_id'])) {
-            $_SESSION['saldo'] = $this->transaksiModel->getSaldo($_SESSION['user_id']);
+        if (isset($_SESSION['username'])) {
+            $_SESSION['saldo'] = $this->penggunaModel->getSaldoByUsername($_SESSION['username']);
         }
 
         header('Location: index.php?modul=transaksi');
     }
 
-
     public function deleteTransaksi($transaksi_id)
     {
         $result = $this->transaksiModel->deleteTransaksi($transaksi_id);
-        if (!$result) {
-            throw new Exception('Transaksi tidak ditemukan.');
-        } else {
-            header('Location: index.php?modul=transaksi');
-        }
-    }
-
-    public function rejectTransaksi($transaksi_id)
-    {
-        $result = $this->transaksiModel->rejectTransaksi($transaksi_id);
-        if ($result) {
-            header('Location: index.php?modul=transaksi&status=rejected');
-        } else {
-            header('Location: index.php?modul=transaksi&error=reject_failed');
-        }
+        header('Location: index.php?modul=transaksi');
     }
 }

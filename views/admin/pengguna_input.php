@@ -23,7 +23,7 @@
             <!-- Formulir Input Pengguna -->
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Tambah Pengguna</h2>
-                <form action="/../../index.php?modul=pengguna&fitur=add" method="POST">
+                <form action="/ProjectDB/index.php?modul=pengguna&fitur=add" method="POST"> <!-- Corrected form action URL -->
                     <!-- Nama Pengguna -->
                     <div class="mb-4">
                         <label for="pengguna_username" class="block text-gray-700 text-sm font-bold mb-2">Username Pengguna:</label>

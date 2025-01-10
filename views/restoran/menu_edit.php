@@ -18,7 +18,7 @@ $menu = $obj_modelMenu->getMenuById($menu_id);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Menu</title>
+    <title>Edit Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -34,10 +34,10 @@ $menu = $obj_modelMenu->getMenuById($menu_id);
 
         <!-- Main Content -->
         <div class="flex-1 p-8">
-            <!-- Formulir Input Menu -->
+            <!-- Formulir Edit Menu -->
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Menu</h2>
-                <form action="/../../index.php?modul=menu&fitur=update&id=<?php echo $menu->menu_id; ?>" method="POST" enctype="multipart/form-data">
+                <form action="/ProjectDB/index.php?modul=menu&fitur=update&id=<?php echo $menu['menu_id']; ?>" method="POST" enctype="multipart/form-data">
 
                     <!-- Nama Restoran -->
                     <div class="mb-4">
@@ -49,7 +49,7 @@ $menu = $obj_modelMenu->getMenuById($menu_id);
                     <!-- Nama Menu -->
                     <div class="mb-4">
                         <label for="menu_nama" class="block text-gray-700 text-sm font-bold mb-2">Nama Menu:</label>
-                        <input type="text" id="menu_nama" name="menu_nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Nama Menu" required>
+                        <input type="text" id="menu_nama" name="menu_nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="<?php echo htmlspecialchars($menu['menu_nama']); ?>" required>
                     </div>
 
                     <!-- Kategori Menu -->
@@ -57,22 +57,25 @@ $menu = $obj_modelMenu->getMenuById($menu_id);
                         <label for="menu_kategori" class="block text-gray-700 text-sm font-bold mb-2">Kategori:</label>
                         <select id="menu_kategori" name="menu_kategori" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                             <option value="">Pilih Kategori</option>
-                            <option value="Makanan">Makanan</option>
-                            <option value="Minuman">Minuman</option>
-                            <option value="Snack">Snack</option>
+                            <option value="Makanan" <?php echo $menu['menu_kategori'] == 'Makanan' ? 'selected' : ''; ?>>Makanan</option>
+                            <option value="Minuman" <?php echo $menu['menu_kategori'] == 'Minuman' ? 'selected' : ''; ?>>Minuman</option>
+                            <option value="Snack" <?php echo $menu['menu_kategori'] == 'Snack' ? 'selected' : ''; ?>>Snack</option>
                         </select>
                     </div>
 
                     <!-- Harga Menu -->
                     <div class="mb-4">
                         <label for="menu_harga" class="block text-gray-700 text-sm font-bold mb-2">Harga:</label>
-                        <input type="number" id="menu_harga" name="menu_harga" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Harga Menu" required min="0">
+                        <input type="number" id="menu_harga" name="menu_harga" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="<?php echo htmlspecialchars($menu['menu_harga']); ?>" required min="0">
                     </div>
 
                     <!-- Gambar Menu -->
                     <div class="mb-4">
                         <label for="menu_gambar" class="block text-gray-700 text-sm font-bold mb-2">Gambar Menu:</label>
                         <input type="file" id="menu_gambar" name="menu_gambar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <?php if (!empty($menu['menu_gambar'])): ?>
+                            <img src="<?php echo htmlspecialchars($menu['menu_gambar']); ?>" alt="Gambar Menu" class="mt-2 w-32 h-32 object-contain">
+                        <?php endif; ?>
                     </div>
 
                     <!-- Submit Button -->

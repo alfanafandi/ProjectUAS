@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restoo</title>
-    <link rel="icon" href="../image/logo.png" type="image/x-icon">
+    <link rel="icon" href="image\logo.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -26,7 +26,7 @@
                         <h2 class="text-lg font-semibold text-white">Saldo Anda</h2>
                         <p class="text-white text-xl font-bold"><?php echo "Rp " . number_format($saldo, 0, ',', '.'); ?></p>
                     </div>
-                    <a href="/index.php?modul=saldo" class="bg-white text-teal-500 text-l py-2 px-4 rounded-lg shadow-md hover:bg-gray-200 transition">Isi Saldo</a>
+                    <a href="index.php?modul=saldo" class="bg-white text-teal-500 text-l py-2 px-4 rounded-lg shadow-md hover:bg-gray-200 transition">Isi Saldo</a>
                 </div>
             </div>
             <!-- Promo Hari Ini -->

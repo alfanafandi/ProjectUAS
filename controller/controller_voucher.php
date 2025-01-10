@@ -15,10 +15,9 @@ class controllerVoucher
     {
         $voucher = $this->voucherModel->getVoucherByCode($voucher_kode);
         if ($voucher) {
-            // Simpan kode voucher dan diskon ke session
             $_SESSION['voucher'] = [
-                'kode' => $voucher['kode'],
-                'diskon' => $voucher['diskon']
+                'kode' => $voucher->kode,
+                'diskon' => $voucher->diskon
             ];
             return true;
         }
@@ -33,8 +32,8 @@ class controllerVoucher
 
     public function listCustomerVouchers()
     {
-        $vouchers = $this->voucherModel->getAllVouchers(); // Ambil data voucher
-        include 'views/customer/keranjang.php'; // Tampilkan data ke view
+        $vouchers = $this->voucherModel->getAllVouchers();
+        include 'views/customer/keranjang.php';
     }
 
     public function getVoucherByCode($voucher_kode)

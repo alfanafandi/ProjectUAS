@@ -25,23 +25,23 @@
             <h2 class="text-3xl font-bold mb-6 text-gray-800">Dashboard Admin</h2>
 
             <!-- Statistik Utama -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
                 <!-- Total Transaksi -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
                     <h3 class="text-lg font-semibold text-gray-800">Total Transaksi</h3>
-                    <p class="text-4xl font-bold text-green-500 mt-2"><?= $totalTransaksi; ?></p>
+                    <p class="text-5xl font-bold text-green-500 mt-4"><?= $totalTransaksi; ?></p>
                 </div>
 
                 <!-- Total Pengguna -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
                     <h3 class="text-lg font-semibold text-gray-800">Total Pengguna</h3>
-                    <p class="text-4xl font-bold text-blue-500 mt-2"><?= $totalPengguna; ?></p>
+                    <p class="text-5xl font-bold text-blue-500 mt-4"><?= $totalPengguna; ?></p>
                 </div>
 
                 <!-- Total Restoran -->
-                <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
                     <h3 class="text-lg font-semibold text-gray-800">Total Restoran</h3>
-                    <p class="text-4xl font-bold text-yellow-500 mt-2"><?= $totalRestoran; ?></p>
+                    <p class="text-5xl font-bold text-yellow-500 mt-4"><?= $totalRestoran; ?></p>
                 </div>
             </div>
         </main>

@@ -2,25 +2,12 @@
 $keranjang = $_SESSION['keranjangItems'] ?? [];
 $totalPrice = $_SESSION['totalPrice'] ?? 0;
 
-$diskonRestoran = [];
-$jsonFilePathRestoran = __DIR__ . '/../../json/diskons.json';
-if (file_exists($jsonFilePathRestoran)) {
-    $jsonDataRestoran = json_decode(file_get_contents($jsonFilePathRestoran), true);
-    foreach ($jsonDataRestoran['diskons'] ?? [] as $diskon) {
-        $diskonRestoran[] = [
-            'restoran_id' => $diskon['diskon_restoran']['restoran_id'] ?? null,
-            'restoran_nama' => $diskon['diskon_restoran']['restoran_nama'] ?? 'Nama restoran tidak tersedia',
-            'diskon_nama' => $diskon['diskon_nama'] ?? 'Diskon tidak diketahui',
-            'diskon_presentase' => $diskon['diskon_presentase'] ?? 0,
-        ];
-    }
-}
 $restoran_id = $restoran->restoran_id;
 
-$diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use ($restoran_id) {
-    return $diskon['restoran_id'] === $restoran_id;
-});
-
+// Fetch discount data from the database
+require_once __DIR__ . '/../../model/diskon_model.php';
+$modelDiskon = new DiskonModel();
+$diskonRestoranFiltered = $modelDiskon->getDiskonsByRestoran($restoran_id);
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +17,7 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($restoran->restoran_nama); ?> - Restoo</title>
-    <link rel="icon" href="../image/logo.png" type="image/x-icon">
+    <link rel="icon" href="image\logo.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         #keranjang-bar-wrapper {
@@ -137,14 +124,14 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <?php foreach ($menus_by_restoran as $menu): ?>
                     <div class="bg-white p-4 rounded-lg shadow-md">
-                        <img src="<?= htmlspecialchars($menu->menu_gambar); ?>" alt="<?= htmlspecialchars($menu->menu_nama); ?>" class="w-full h-32 object-contain rounded-lg mb-2">
-                        <h4 class="font-bold text-md"><?= htmlspecialchars($menu->menu_nama); ?></h4>
+                        <img src="<?= htmlspecialchars($menu['menu_gambar']); ?>" alt="<?= htmlspecialchars($menu['menu_nama']); ?>" class="w-full h-32 object-contain rounded-lg mb-2">
+                        <h4 class="font-bold text-md"><?= htmlspecialchars($menu['menu_nama']); ?></h4>
                         <div class="flex justify-between items-center mt-2">
-                            <span class="text-green-500 font-bold">Rp <?= number_format($menu->menu_harga, 0, ',', '.'); ?></span>
+                            <span class="text-green-500 font-bold">Rp <?= number_format($menu['menu_harga'], 0, ',', '.'); ?></span>
                             <button class="bg-blue-500 text-white py-1 px-4 rounded-md btn-tambah"
-                                data-id="<?= $menu->menu_id; ?>"
-                                data-item="<?= htmlspecialchars($menu->menu_nama); ?>"
-                                data-price="<?= $menu->menu_harga; ?>"
+                                data-id="<?= $menu['menu_id']; ?>"
+                                data-item="<?= htmlspecialchars($menu['menu_nama']); ?>"
+                                data-price="<?= $menu['menu_harga']; ?>"
                                 data-restoran="<?= $restoran->restoran_id; ?>">Tambah</button>
                         </div>
                     </div>
@@ -219,7 +206,7 @@ $diskonRestoranFiltered = array_filter($diskonRestoran, function ($diskon) use (
                 })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = '/index.php?modul=keranjang';
+                        window.location.href = 'index.php?modul=keranjang';
                     } else {
                         return response.json().then(err => {
                             console.error('Error:', err.message);

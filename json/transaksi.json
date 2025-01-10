@@ -1,90 +1,20 @@
 [
     {
         "transaksi_id": 1,
-        "nama_pengguna": {
-            "user_id": 3,
-            "user_username": "customer",
-            "user_password": "customer123",
-            "saldo": 20000
-        },
-        "jumlah_topup": 100000,
+        "nama_pengguna": "alfan",
+        "jumlah_topup": 123456,
         "status": "Approved"
     },
     {
         "transaksi_id": 2,
-        "nama_pengguna": {
-            "user_id": 3,
-            "user_username": "customer",
-            "user_password": "customer123",
-            "saldo": 20000
-        },
-        "jumlah_topup": 50000,
+        "nama_pengguna": "afandi",
+        "jumlah_topup": 654321,
         "status": "Approved"
     },
     {
         "transaksi_id": 3,
-        "nama_pengguna": {
-            "user_id": 3,
-            "user_username": "customer",
-            "user_password": "customer123",
-            "saldo": 20000
-        },
-        "jumlah_topup": 100000,
-        "status": "Approved"
-    },
-    {
-        "transaksi_id": 4,
-        "nama_pengguna": {
-            "user_id": 3,
-            "user_username": "customer",
-            "user_password": "customer123",
-            "saldo": 0
-        },
-        "jumlah_topup": 100000,
-        "status": "Approved"
-    },
-    {
-        "transaksi_id": 5,
-        "nama_pengguna": {
-            "user_id": 3,
-            "user_username": "customer",
-            "user_password": "customer123",
-            "saldo": 81950
-        },
-        "jumlah_topup": 50000,
-        "status": "Approved"
-    },
-    {
-        "transaksi_id": 6,
-        "nama_pengguna": {
-            "user_id": 3,
-            "user_username": "customer",
-            "user_password": "customer123",
-            "saldo": 59700
-        },
-        "jumlah_topup": 50000,
-        "status": "Approved"
-    },
-    {
-        "transaksi_id": 7,
-        "nama_pengguna": {
-            "user_id": 3,
-            "user_username": "customer",
-            "user_password": "customer123",
-            "saldo": 109700
-        },
-        "jumlah_topup": 12000,
-        "status": "Approved"
-    },
-    {
-        "transaksi_id": 8,
-        "nama_pengguna": {
-            "user_id": 4,
-            "user_username": "alfan",
-            "user_password": "123",
-            "saldo": 232376
-        },
-        "jumlah_topup": 99999,
+        "nama_pengguna": "alfan",
+        "jumlah_topup": 500000,
         "status": "Approved"
     }
 ]

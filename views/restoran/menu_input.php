@@ -37,7 +37,7 @@ $restoranLogin = $modelRestoran->getRestoranById($restoran_id_login);
             <!-- Formulir Input Menu -->
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Tambah Menu</h2>
-                <form action="/../../index.php?modul=menu&fitur=add" method="POST" enctype="multipart/form-data">
+                <form action="/ProjectDB/index.php?modul=menu&fitur=add" method="POST" enctype="multipart/form-data">
 
                     <!-- Nama Restoran (Hanya untuk restoran yang login) -->
                     <div class="mb-4">

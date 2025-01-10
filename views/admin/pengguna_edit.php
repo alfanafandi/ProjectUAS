@@ -27,19 +27,19 @@
                     <!-- Nama Pengguna -->
                     <div class="mb-4">
                         <label for="pengguna_username" class="block text-gray-700 text-sm font-bold mb-2">Username Pengguna:</label>
-                        <input type="text" id="pengguna_username" name="pengguna_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Nama Pengguna" required>
+                        <input type="text" id="pengguna_username" name="pengguna_username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Nama Pengguna" value="<?php echo htmlspecialchars($user->user_username); ?>" required>
                     </div>
 
                     <!-- Kata Sandi -->
                     <div class="mb-4">
                         <label for="pengguna_password" class="block text-gray-700 text-sm font-bold mb-2">Kata Sandi:</label>
-                        <input type="password" id="pengguna_password" name="pengguna_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Kata Sandi" required>
+                        <input type="password" id="pengguna_password" name="pengguna_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Kata Sandi">
                     </div>
 
                     <!-- Saldo -->
                     <div class="mb-4">
                         <label for="pengguna_saldo" class="block text-gray-700 text-sm font-bold mb-2">Saldo:</label>
-                        <input id="pengguna_saldo" name="pengguna_saldo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Saldo" required></input>
+                        <input type="number" id="pengguna_saldo" name="pengguna_saldo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Saldo" value="<?php echo htmlspecialchars($user->saldo); ?>" required></input>
                     </div>
 
                     <!-- Submit Button -->

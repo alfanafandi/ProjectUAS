@@ -8,8 +8,6 @@ $modelRestoran = new RestoranModel();
 
 $restoran_id_login = $_SESSION['restoran_id'];
 
-echo $restoran_id_login;
-
 // Ambil data restoran berdasarkan ID login
 $restoranLogin = $modelRestoran->getRestoranById($restoran_id_login);
 ?>
@@ -38,12 +36,12 @@ $restoranLogin = $modelRestoran->getRestoranById($restoran_id_login);
             <!-- Formulir Input Diskon -->
             <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-6 text-gray-800">Tambah Diskon</h2>
-                <form action="/../../index.php?modul=diskon&fitur=add" method="POST">
+                <form action="/ProjectDB/index.php?modul=diskon&fitur=add" method="POST">
                     <!-- Nama Restoran (Hanya untuk restoran yang login) -->
                     <div class="mb-4">
-                        <label for="diskon_restoran" class="block text-gray-700 text-sm font-bold mb-2">Nama Restoran:</label>
-                        <input type="text" id="diskon_restoran" name="diskon_restoran" value="<?php echo htmlspecialchars($restoranLogin->restoran_nama); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
-                        <input type="hidden" name="diskon_restoran" value="<?php echo htmlspecialchars($restoranLogin->restoran_id); ?>">
+                        <label for="restoran_id" class="block text-gray-700 text-sm font-bold mb-2">Nama Restoran:</label>
+                        <input type="text" id="restoran_id" name="restoran_id" value="<?php echo htmlspecialchars($restoranLogin->restoran_nama); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
+                        <input type="hidden" name="restoran_id" value="<?php echo htmlspecialchars($restoranLogin->restoran_id); ?>">
                     </div>
 
                     <!-- Nama Diskon -->
@@ -54,8 +52,8 @@ $restoranLogin = $modelRestoran->getRestoranById($restoran_id_login);
 
                     <!-- Presentase Diskon -->
                     <div class="mb-4">
-                        <label for="diskon_persen" class="block text-gray-700 text-sm font-bold mb-2">Presentase Diskon (%):</label>
-                        <input type="number" id="diskon_persen" name="diskon_persen" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Presentase Diskon" required min="0" max="100">
+                        <label for="diskon_presentase" class="block text-gray-700 text-sm font-bold mb-2">Presentase Diskon (%):</label>
+                        <input type="number" id="diskon_presentase" name="diskon_presentase" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan Presentase Diskon" required min="0" max="100">
                     </div>
 
                     <!-- Submit Button -->

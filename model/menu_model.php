@@ -4,139 +4,93 @@ require_once __DIR__ . '/../domain_object/node_restoran.php';
 
 class MenuModel
 {
-    private $menus = [];
-    private $next_id = 1;
-    private $data_file = __DIR__ . '/../json/menus.json';
+    private $db;
     private $restoranModel;
 
     public function __construct(RestoranModel $restoranModel)
     {
         $this->restoranModel = $restoranModel;
-        if (file_exists($this->data_file)) {
-            $this->menus = $this->loadFromJson();
-            $this->next_id = count($this->menus) + 1;
-        } else {
-            $this->initializeDefaultMenu();
+        $this->db = new mysqli('localhost', 'root', '', 'ProjectDB');
+        if ($this->db->connect_error) {
+            die("Connection failed: " . $this->db->connect_error);
         }
-    }
-
-    public function initializeDefaultMenu()
-    {
-        $defaultImageDir = __DIR__ . '/../uploads/menus/';
-
-        if (!is_dir($defaultImageDir)) {
-            mkdir($defaultImageDir, 0755, true);
-        }
-
-        $this->addMenu(1, "Nasi Goreng", "Makanan", 20000, "uploads/menus/nasi_goreng.jpg");
-        $this->addMenu(1, "Ayam Bakar", "Makanan", 30000, "uploads/menus/ayam_bakar.jpg");
-        $this->addMenu(2, "Coca-cola", "Minuman", 7000, "uploads/menus/coca_cola.jpg");
-        $this->addMenu(3, "Burger", "Makanan", 25000, "uploads/menus/burger.jpg");
-
-        $this->saveToJson();
     }
 
     public function addMenu($restoran_id, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar)
     {
-        $restoran = $this->restoranModel->getRestoranById($restoran_id);
-        if ($restoran) {
-            $menu = new \Makanan($this->next_id++, $restoran, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar);
-            $this->menus[] = $menu;
-            $this->saveToJson();
-        } else {
-            throw new Exception('Restoran tidak ditemukan.');
-        }
-    }
-
-    private function saveToJson()
-    {
-        $data = [
-            'menus' => $this->menus,
-            'next_id' => $this->next_id
-        ];
-        file_put_contents($this->data_file, json_encode($data, JSON_PRETTY_PRINT));
-    }
-
-    private function loadFromJson()
-    {
-        $data = json_decode(file_get_contents($this->data_file), true);
-        $menus = array_map(function ($menu) {
-            return new \Makanan(
-                $menu['menu_id'],
-                $this->restoranModel->getRestoranById($menu['menu_restoran']['restoran_id']),
-                $menu['menu_nama'],
-                $menu['menu_kategori'],
-                $menu['menu_harga'],
-                $menu['menu_gambar']
-            );
-        }, $data['menus']);
-        $this->next_id = $data['next_id'];
-        return $menus;
+        $stmt = $this->db->prepare("INSERT INTO menus (restoran_id, menu_nama, menu_kategori, menu_harga, menu_gambar) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("issss", $restoran_id, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function getAllMenus()
     {
-        return $this->menus;
+        $result = $this->db->query("SELECT * FROM menus");
+        $menus = [];
+        while ($row = $result->fetch_assoc()) {
+            $row['restoran'] = $this->restoranModel->getRestoranById($row['restoran_id']);
+            $menus[] = $row;
+        }
+        return $menus;
     }
 
     public function getMenuById($menu_id)
     {
-        foreach ($this->menus as $menu) {
-            if ($menu->menu_id == $menu_id) {
-                return $menu;
-            }
+        $stmt = $this->db->prepare("SELECT * FROM menus WHERE menu_id = ?");
+        $stmt->bind_param("i", $menu_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $menu = $result->fetch_assoc();
+        $stmt->close();
+        if ($menu) {
+            $menu['restoran'] = $this->restoranModel->getRestoranById($menu['restoran_id']);
         }
-        return null;
+        return $menu;
     }
 
     public function getMenusByRestoran($restoran_id)
     {
-        $menus_by_restoran = [];
-        foreach ($this->menus as $menu) {
-            if ($menu->menu_restoran->restoran_id == $restoran_id) {
-                $menus_by_restoran[] = $menu;
-            }
+        $stmt = $this->db->prepare("SELECT * FROM menus WHERE restoran_id = ?");
+        $stmt->bind_param("i", $restoran_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $menus = [];
+        while ($row = $result->fetch_assoc()) {
+            $row['restoran'] = $this->restoranModel->getRestoranById($row['restoran_id']);
+            $menus[] = $row;
         }
-        return $menus_by_restoran;
+        $stmt->close();
+        return $menus;
     }
 
-    public function updateMenu($menu_id, $menu_restoran, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar)
+    public function updateMenu($menu_id, $restoran_id, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar)
     {
-        foreach ($this->menus as $menu) {
-            if ($menu->menu_id == $menu_id) {
-                $restoran = $this->restoranModel->getRestoranById($menu_restoran);
-                $menu->menu_restoran = $restoran;
-                $menu->menu_nama = $menu_nama;
-                $menu->menu_kategori = $menu_kategori;
-                $menu->menu_harga = $menu_harga;
-                $menu->menu_gambar = $menu_gambar;
-                $this->saveToJson();
-                return true;
-            }
-        }
-        return false;
+        $stmt = $this->db->prepare("UPDATE menus SET restoran_id = ?, menu_nama = ?, menu_kategori = ?, menu_harga = ?, menu_gambar = ? WHERE menu_id = ?");
+        $stmt->bind_param("issssi", $restoran_id, $menu_nama, $menu_kategori, $menu_harga, $menu_gambar, $menu_id);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function deleteMenu($menu_id)
     {
-        foreach ($this->menus as $key => $menu) {
-            if ($menu->menu_id == $menu_id) {
-                unset($this->menus[$key]);
-                $this->menus = array_values($this->menus);
-                $this->saveToJson();
-                return true;
-            }
-        }
-        return false;
+        $stmt = $this->db->prepare("DELETE FROM menus WHERE menu_id = ?");
+        $stmt->bind_param("i", $menu_id);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function getMenuByName($menu_nama)
     {
-        foreach ($this->menus as $menu) {
-            if ($menu_nama == $menu->menu_nama) {
-                return $menu;
-            }
+        $stmt = $this->db->prepare("SELECT * FROM menus WHERE menu_nama = ?");
+        $stmt->bind_param("s", $menu_nama);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $menu = $result->fetch_assoc();
+        $stmt->close();
+        if ($menu) {
+            $menu['restoran'] = $this->restoranModel->getRestoranById($menu['restoran_id']);
         }
-        return null;
+        return $menu;
     }
 }

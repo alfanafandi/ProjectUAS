@@ -34,7 +34,7 @@
                     <table class="min-w-full bg-white">
                         <thead class="bg-gradient-to-r from-gray-800 to-gray-700 text-white">
                             <tr>
-                                <th class="py-4 px-4 uppercase font-semibold text-sm">User ID</th>
+                                <th class="py-4 px-4 uppercase font-semibold text-sm">Urutan</th>
                                 <th class="py-4 px-4 uppercase font-semibold text-sm">Nama Pengguna</th>
                                 <th class="py-4 px-4 uppercase font-semibold text-sm">Saldo</th>
                                 <th class="py-4 px-4 uppercase font-semibold text-sm">Actions</th>
@@ -42,21 +42,24 @@
                         </thead>
                         <tbody class="text-gray-700">
                             <?php if (!empty($users)) {
-                                foreach ($users as $user) { ?>
-                                    <tr class="text-center border-b border-gray-300 transition duration-200 ease-in-out hover:bg-gray-200">
-                                        <td class="py-3 px-4 text-blue-600"><?php echo htmlspecialchars($user->user_id); ?></td>
-                                        <td class="py-3 px-4"><?php echo htmlspecialchars($user->user_username); ?></td>
-                                        <td class="py-3 px-4">Rp.<?php echo htmlspecialchars($user->saldo); ?></td>
-                                        <td class="py-3 px-4">
-                                            <button class="bg-green-200 hover:bg-green-300 text-green-700 font-semibold py-1 px-3 rounded-md transition duration-200">
-                                                <a href="index.php?modul=pengguna&fitur=edit&id=<?php echo $user->user_id; ?>" class="block">Update</a>
-                                            </button>
-                                            <button class="bg-red-200 hover:bg-red-300 text-red-700 font-semibold py-1 px-3 rounded-md transition duration-200">
-                                                <a href="index.php?modul=pengguna&fitur=delete&id=<?php echo $user->user_id; ?>" class="block" onclick="return confirm('Apakah anda yakin ingin menghapus pengguna ini?');">Delete</a>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                $queue = 1;
+                                foreach ($users as $user) {
+                                    if ($user->user_username !== 'admin') { ?>
+                                        <tr class="text-center border-b border-gray-300 transition duration-200 ease-in-out hover:bg-gray-200">
+                                            <td class="py-3 px-4 text-blue-600"><?php echo $queue++; ?></td>
+                                            <td class="py-3 px-4"><?php echo htmlspecialchars($user->user_username); ?></td>
+                                            <td class="py-3 px-4">Rp.<?php echo htmlspecialchars($user->saldo); ?></td>
+                                            <td class="py-3 px-4">
+                                                <button class="bg-green-200 hover:bg-green-300 text-green-700 font-semibold py-1 px-3 rounded-md transition duration-200">
+                                                    <a href="index.php?modul=pengguna&fitur=edit&id=<?php echo $user->user_id; ?>" class="block">Update</a>
+                                                </button>
+                                                <button class="bg-red-200 hover:bg-red-300 text-red-700 font-semibold py-1 px-3 rounded-md transition duration-200">
+                                                    <a href="index.php?modul=pengguna&fitur=delete&id=<?php echo $user->user_id; ?>" class="block" onclick="return confirm('Apakah anda yakin ingin menghapus pengguna ini?');">Delete</a>
+                                                </button>
+                                            </td>
+                                        </tr>
                                 <?php }
+                                }
                             } else { ?>
                                 <tr>
                                     <td colspan="5" class="py-3 px-4 text-center">Tidak ada data pengguna tersedia.</td>

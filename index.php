@@ -8,8 +8,6 @@ require_once 'controller/controller_transaksi.php';
 require_once 'controller/controller_voucher.php';
 require_once 'controller/controller_diskon.php';
 
-
-
 // Objek sebagai parameter
 $modelRestoran = new RestoranModel();
 $modelMenu = new MenuModel($modelRestoran);
@@ -26,12 +24,12 @@ $objectTransaksi = new controllerTransaksi($modelPengguna);
 $objectVoucher = new controllerVoucher();
 $objectDiskon = new controllerDiskon($modelRestoran);
 
-if (!isset($_SESSION['user_id']) && (!isset($_SESSION['restoran_id'])) && (!isset($_GET['modul']) || $_GET['modul'] != 'login')) {
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['restoran_id']) && (!isset($_GET['modul']) || ($_GET['modul'] != 'login' && $_GET['modul'] != 'register'))) {
     header('Location: index.php?modul=login');
     exit;
 }
 
-$modul = $_GET['modul'] ?? 'dashboard';
+$modul = $_GET['modul'] ?? 'login';
 
 switch ($modul) {
     case 'login':
@@ -49,11 +47,11 @@ switch ($modul) {
                 exit;
             }
 
-            // Verifikasi user lain
             $user = $modelPengguna->getUserByUsername($username);
             if ($user && $password === $user->user_password) {
                 $_SESSION['user_id'] = $user->user_id;
                 $_SESSION['username'] = $user->user_username;
+                $_SESSION['saldo'] = $user->saldo;
 
                 switch ($user->user_username) {
                     case 'admin':
@@ -105,6 +103,7 @@ switch ($modul) {
         $restoran = $modelRestoran->getRestoranById($restoran_id);
         $menuRestoran = $objectMenu->getMenusByRestoran($restoran_id);
         $totalMenu = count($menuRestoran);
+        $menus = $menuRestoran; // Pass the menus to the view
 
         include 'views/restoran/restoran_dashboard.php';
         break;
@@ -115,7 +114,7 @@ switch ($modul) {
         $transaksis = $modelTransaksi->getAllTransaksi();
         $vouchers = $modelVoucher->getAllVouchers();
         $diskons = $modelDiskon->getAllDiskons();
-        $saldo = $objectPengguna->getSaldoLoggedInUser();
+        $saldo = $_SESSION['saldo'];
         include 'views/customer/customer_dashboard.php';
         break;
 
@@ -223,14 +222,11 @@ switch ($modul) {
                     $nama = $_POST['menu_nama'];
                     $harga = $_POST['menu_harga'];
                     $kategori = $_POST['menu_kategori'];
-                    $gambar = $_FILES['menu_gambar']['name'];
-                    $uploadDir = 'uploads/menus/';
-                    if (!is_dir($uploadDir)) {
-                        mkdir($uploadDir, 0755, true);
-                    }
-                    $uploadFile = $uploadDir . basename($gambar);
-                    move_uploaded_file($_FILES['menu_gambar']['tmp_name'], $uploadFile);
-                    $objectMenu->updateMenu($id, $resto, $nama, $kategori, $harga, $uploadFile);
+                    $gambar = $_FILES['menu_gambar'];
+
+                    $objectMenu->updateMenu($id, $resto, $nama, $kategori, $harga, $gambar);
+                    header('Location: index.php?modul=menu');
+                    exit;
                 }
                 break;
             case 'delete':
@@ -264,8 +260,14 @@ switch ($modul) {
             case 'update':
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $username = $_POST['pengguna_username'];
-                    $password = password_hash($_POST['pengguna_password'], PASSWORD_DEFAULT);
+                    $password = $_POST['pengguna_password'];
                     $saldo = isset($_POST['pengguna_saldo']) ? intval($_POST['pengguna_saldo']) : 0;
+
+                    if (empty($password)) {
+                        $user = $modelPengguna->getUserById($id);
+                        $password = $user->user_password;
+                    }
+
                     $objectPengguna->updatePengguna($id, $username, $password, $saldo);
                 }
                 break;
@@ -284,17 +286,17 @@ switch ($modul) {
         switch ($fitur) {
             case 'add':
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $pengguna_id = filter_input(INPUT_POST, 'pengguna', FILTER_SANITIZE_NUMBER_INT);
+                    $pengguna_username = filter_input(INPUT_POST, 'pengguna', FILTER_SANITIZE_STRING);
                     $jumlah = filter_input(INPUT_POST, 'jumlah', FILTER_VALIDATE_INT);
 
                     if ($jumlah === false || $jumlah <= 0) {
                         die('Jumlah tidak valid. Harus berupa bilangan bulat positif.');
                     }
 
-                    // Cari pengguna berdasarkan ID
-                    $pengguna = $objectPengguna->getUserById($pengguna_id);
+                    // Cari pengguna berdasarkan username
+                    $pengguna = $modelPengguna->getUserByUsername($pengguna_username);
                     if ($pengguna) {
-                        $objectTransaksi->addTransaksi($pengguna, $jumlah);
+                        $objectTransaksi->addTransaksi($pengguna->user_username, $jumlah);
                         exit;
                     } else {
                         die('Pengguna tidak ditemukan.');
@@ -366,11 +368,11 @@ switch ($modul) {
         $id = $_GET['id'] ?? null;
         switch ($fitur) {
             case 'add':
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $resto = $_POST['diskon_restoran'];
-                    $nama = $_POST['diskon_nama'];
-                    $persen = $_POST['diskon_persen'];
-                    $objectDiskon->addDiskon($resto, $nama, $persen);
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $restoran_id = $_POST['restoran_id'];
+                    $diskon_nama = $_POST['diskon_nama'];
+                    $diskon_presentase = $_POST['diskon_presentase'];
+                    $objectDiskon->addDiskon($restoran_id, $diskon_nama, $diskon_presentase);
                 } else {
                     include 'views/restoran/diskon_input.php';
                 }
@@ -379,11 +381,13 @@ switch ($modul) {
                 $objectDiskon->editById($id);
                 break;
             case 'update':
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $resto = $_POST['diskon_restoran'];
-                    $nama = $_POST['diskon_nama'];
-                    $persen = $_POST['diskon_persen'];
-                    $objectDiskon->updateDiskon($id, $resto, $nama, $persen);
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $restoran_id = $_POST['restoran_id'];
+                    $diskon_nama = $_POST['diskon_nama'];
+                    $diskon_presentase = $_POST['diskon_presentase'];
+                    $objectDiskon->updateDiskon($id, $restoran_id, $diskon_nama, $diskon_presentase);
+                    header('Location: index.php?modul=diskon');
+                    exit;
                 }
                 break;
             case 'delete':
@@ -391,8 +395,8 @@ switch ($modul) {
                 break;
             default:
                 $restoran_id = $_SESSION['restoran_id'];
-                $restoran = $modelRestoran->getRestoranById($restoran_id);
-                $objectDiskon->listDiskonsByRestoran($restoran_id);
+                $diskons = $objectDiskon->getDiskonsByRestoran($restoran_id);
+                include 'views/restoran/diskon_list.php';
         }
         break;
 
@@ -408,6 +412,7 @@ switch ($modul) {
     case 'belanja':
         $fitur = $_GET['fitur'] ?? null;
         $id = $_GET['id'] ?? null;
+
         switch ($fitur) {
             default:
                 $objectRestoran->belanjaById($id);
@@ -448,8 +453,8 @@ switch ($modul) {
             if ($saldo >= $totalPrice) {
                 $saldoBaru = $saldo - $totalPrice;
                 $objectPengguna->updateSaldoMin($loggedInUserId, $saldoBaru);
-
                 $objectPengguna->addRiwayat($loggedInUserId, $keranjangItems, $totalPrice);
+                $_SESSION['saldo'] = $saldoBaru;
 
                 unset($_SESSION['keranjangItems']);
                 unset($_SESSION['totalPrice']);
@@ -485,14 +490,22 @@ switch ($modul) {
         }
         break;
 
-    default:
-        $restorans = $modelRestoran->getAllRestorans();
-        $penggunas = $modelPengguna->getAllUsers();
-        $transaksis = $modelTransaksi->getAllTransaksi();
-        $vouchers = $modelVoucher->getAllVouchers();
-        $diskons = $modelDiskon->getAllDiskons();
-        $menus = $modelMenu->getAllMenus();
+    case 'register':
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $username = $_POST['user_username'];
+            $password = $_POST['user_password'];
 
-        include 'views/admin/admin_dashboard.php';
+            if ($modelPengguna->getUserByUsername($username)) {
+                $error = "Username sudah terdaftar!";
+            } else {
+                $objectPengguna->registerPengguna($username, $password);
+                exit;
+            }
+        }
+        include 'views/customer/register.php';
+        break;
+
+    default:
+        header('Location: index.php?modul=login');
         break;
 }

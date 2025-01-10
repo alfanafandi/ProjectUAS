@@ -3,114 +3,69 @@ require_once __DIR__ . '/../domain_object/node_restoran.php';
 
 class RestoranModel
 {
-    private $restorans = [];
-    private $next_id = 1;
-    private $data_file = __DIR__ . '/../json/restorans.json';
+    private $db;
 
     public function __construct()
     {
-        if (file_exists($this->data_file)) {
-            $this->loadFromJson();
-        } else {
-            $this->initializeDefaultRestoran();
+        $this->db = new mysqli('localhost', 'root', '', 'ProjectDB');
+        if ($this->db->connect_error) {
+            die("Connection failed: " . $this->db->connect_error);
         }
     }
-
-    public function initializeDefaultRestoran()
-    {
-        $defaultImageDir = 'uploads/restorans/';
-
-        if (!is_dir($defaultImageDir)) {
-            mkdir($defaultImageDir, 0755, true);
-        }
-
-        $this->addRestoran("Aiola", "123", $defaultImageDir . "aiola.jpg");
-        $this->addRestoran("Ayam Bakar Pak D", "123", $defaultImageDir . "ayam_bakar_pak_d.jpg");
-        $this->addRestoran("MC Donald", "123", $defaultImageDir . "mc_donald.jpg");
-
-        $this->saveToJson();
-    }
-
 
     public function addRestoran($restoran_nama, $restoran_password, $restoran_gambar)
     {
-        $restoran = new Restoran($this->next_id++, $restoran_nama, $restoran_password, $restoran_gambar);
-        $this->restorans[] = $restoran;
-        $this->saveToJson();
-    }
-
-    private function saveToJson()
-    {
-        $data = [
-            'restorans' => $this->restorans,
-            'next_id' => $this->next_id
-        ];
-        file_put_contents($this->data_file, json_encode($data, JSON_PRETTY_PRINT));
-    }
-
-    private function loadFromJson()
-    {
-        $data = json_decode(file_get_contents($this->data_file), true);
-        $this->restorans = array_map(function ($restoran) {
-            return new Restoran(
-                $restoran['restoran_id'],
-                $restoran['restoran_nama'],
-                $restoran['restoran_password'],
-                $restoran['restoran_gambar']
-            );
-        }, $data['restorans']);
-        $this->next_id = $data['next_id'];
+        $stmt = $this->db->prepare("INSERT INTO restorans (restoran_nama, restoran_password, restoran_gambar) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $restoran_nama, $restoran_password, $restoran_gambar);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function getAllRestorans()
     {
-        return $this->restorans;
+        $result = $this->db->query("SELECT * FROM restorans");
+        $restorans = [];
+        while ($row = $result->fetch_assoc()) {
+            $restorans[] = new Restoran($row['restoran_id'], $row['restoran_nama'], $row['restoran_password'], $row['restoran_gambar']);
+        }
+        return $restorans;
     }
 
     public function getRestoranById($restoran_id)
     {
-        foreach ($this->restorans as $restoran) {
-            if ($restoran->restoran_id == $restoran_id) {
-                return $restoran;
-            }
-        }
-        return null;
+        $stmt = $this->db->prepare("SELECT * FROM restorans WHERE restoran_id = ?");
+        $stmt->bind_param("i", $restoran_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $restoran = $result->fetch_assoc();
+        $stmt->close();
+        return $restoran ? new Restoran($restoran['restoran_id'], $restoran['restoran_nama'], $restoran['restoran_password'], $restoran['restoran_gambar']) : null;
     }
 
     public function updateRestoran($restoran_id, $restoran_nama, $restoran_password, $restoran_gambar)
     {
-        foreach ($this->restorans as $restoran) {
-            if ($restoran->restoran_id == $restoran_id) {
-                $restoran->restoran_nama = $restoran_nama;
-                $restoran->restoran_password = $restoran_password;
-                $restoran->restoran_gambar = $restoran_gambar;
-                $this->saveToJson();
-                return true;
-            }
-        }
-        return false;
+        $stmt = $this->db->prepare("UPDATE restorans SET restoran_nama = ?, restoran_password = ?, restoran_gambar = ? WHERE restoran_id = ?");
+        $stmt->bind_param("sssi", $restoran_nama, $restoran_password, $restoran_gambar, $restoran_id);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function deleteRestoran($restoran_id)
     {
-        foreach ($this->restorans as $key => $restoran) {
-            if ($restoran->restoran_id == $restoran_id) {
-                unset($this->restorans[$key]);
-                $this->restorans = array_values($this->restorans);
-                $this->saveToJson();
-                return true;
-            }
-        }
-        return false;
+        $stmt = $this->db->prepare("DELETE FROM restorans WHERE restoran_id = ?");
+        $stmt->bind_param("i", $restoran_id);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function getRestoranByName($restoran_nama)
     {
-        foreach ($this->restorans as $restoran) {
-            if ($restoran->restoran_nama == $restoran_nama) {
-                return $restoran;
-            }
-        }
-        return null;
+        $stmt = $this->db->prepare("SELECT * FROM restorans WHERE restoran_nama = ?");
+        $stmt->bind_param("s", $restoran_nama);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $restoran = $result->fetch_assoc();
+        $stmt->close();
+        return $restoran ? new Restoran($restoran['restoran_id'], $restoran['restoran_nama'], $restoran['restoran_password'], $restoran['restoran_gambar']) : null;
     }
 }

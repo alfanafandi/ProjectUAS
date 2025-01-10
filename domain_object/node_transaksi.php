@@ -6,7 +6,7 @@ class Transaksi
     public $jumlah_topup;
     public $status;
 
-    function __construct($transaksi_id, $nama_pengguna, $jumlah_topup, $status)
+    public function __construct($transaksi_id, $nama_pengguna, $jumlah_topup, $status)
     {
         $this->transaksi_id = $transaksi_id;
         $this->nama_pengguna = $nama_pengguna;

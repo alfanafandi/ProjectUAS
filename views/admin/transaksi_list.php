@@ -27,7 +27,7 @@
                     <table class="min-w-full bg-white">
                         <thead class="bg-gradient-to-r from-gray-800 to-gray-700 text-white">
                             <tr>
-                                <th class="py-3 px-4 uppercase font-semibold text-sm">Transaksi ID</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm">Urutan</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Nama Pengguna</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Jumlah Top-Up</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm">Status</th>
@@ -37,19 +37,14 @@
                         <tbody class="text-gray-700">
                             <?php
                             if (!empty($transaksis)) {
+                                $queue = 1;
                                 foreach (array_reverse($transaksis) as $transaction) { ?>
                                     <tr class="text-center border-b border-gray-300 transition duration-200 ease-in-out hover:bg-gray-200">
-                                        <td class="py-3 px-4 text-blue-600"><?php echo htmlspecialchars($transaction->transaksi_id); ?></td>
+                                        <td class="py-3 px-4 text-blue-600"><?php echo $queue++; ?></td>
                                         <td class="py-3 px-4">
                                             <?php
                                             if (isset($transaction->nama_pengguna) && $transaction->nama_pengguna != null) {
-                                                if (is_object($transaction->nama_pengguna)) {
-                                                    echo htmlspecialchars($transaction->nama_pengguna->user_username);
-                                                } elseif (is_array($transaction->nama_pengguna) && isset($transaction->nama_pengguna['user_username'])) {
-                                                    echo htmlspecialchars($transaction->nama_pengguna['user_username']);
-                                                } else {
-                                                    echo 'Nama Pengguna Tidak Ditemukan';
-                                                }
+                                                echo htmlspecialchars($transaction->nama_pengguna);
                                             } else {
                                                 echo 'Nama Pengguna Tidak Ditemukan';
                                             }

@@ -5,30 +5,19 @@ $totalItems = $_SESSION['totalItems'] ?? 0;
 $totalPrice = $_SESSION['totalPrice'] ?? 0;
 $diskonVoucher = $_SESSION['kode']['diskon'] ?? 0; // Diskon dari kode voucher
 
-// Ambil data kode voucher dari file JSON
+
+require_once __DIR__ . '/../../model/voucher_model.php';
+$modelVoucher = new VoucherModel();
+$vouchers = $modelVoucher->getAllVouchers();
 $validDiskonCodes = [];
-$diskonFilePath = __DIR__ . '/../../json/vouchers.json';
-if (file_exists($diskonFilePath)) {
-    $vouchers = json_decode(file_get_contents($diskonFilePath), true);
-    foreach ($vouchers as $voucher) {
-        $validDiskonCodes[$voucher['kode']] = $voucher['diskon'];
-    }
+foreach ($vouchers as $voucher) {
+    $validDiskonCodes[$voucher->kode] = (int)$voucher->diskon;
 }
 
-// Ambil data diskon restoran dari file JSON
-$diskonRestoran = [];
-$jsonFilePathRestoran = __DIR__ . '/../../json/diskons.json';
-if (file_exists($jsonFilePathRestoran)) {
-    $jsonDataRestoran = json_decode(file_get_contents($jsonFilePathRestoran), true);
-    foreach ($jsonDataRestoran['diskons'] ?? [] as $diskon) {
-        $diskonRestoran[] = [
-            'restoran_id' => $diskon['diskon_restoran']['restoran_id'],
-            'restoran_nama' => $diskon['diskon_restoran']['restoran_nama'],
-            'diskon_nama' => $diskon['diskon_nama'],
-            'diskon_presentase' => $diskon['diskon_presentase'],
-        ];
-    }
-}
+
+require_once __DIR__ . '/../../model/diskon_model.php';
+$modelDiskon = new DiskonModel();
+$diskonRestoran = $modelDiskon->getAllDiskons();
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +27,7 @@ if (file_exists($jsonFilePathRestoran)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keranjang Belanja</title>
-    <link rel="icon" href="../image/logo.png" type="image/x-icon">
+    <link rel="icon" href="image\logo.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -170,7 +159,10 @@ if (file_exists($jsonFilePathRestoran)) {
         // Fungsi untuk update total harga
         function updateTotalHarga() {
             let totalDiskon = diskonVoucher + diskonRestoran;
-            totalSetelahDiskon = totalHarga - (totalHarga * totalDiskon / 100);
+            if (totalDiskon > 100) {
+                totalDiskon = 100;
+            }
+            totalSetelahDiskon = totalHarga * (1 - totalDiskon / 100);
 
             totalHargaContainer.innerHTML = `
         <div class="bg-gray-100 p-4 rounded-lg shadow-md mt-4">
@@ -208,7 +200,7 @@ if (file_exists($jsonFilePathRestoran)) {
             const kodeDiskon = diskonInput.value.trim().toUpperCase();
 
             if (validDiskonCodes[kodeDiskon]) {
-                diskonVoucher = validDiskonCodes[kodeDiskon];
+                diskonVoucher = parseInt(validDiskonCodes[kodeDiskon], 10);
                 updateTotalHarga();
 
                 diskonInfo.classList.remove('hidden');
@@ -253,6 +245,8 @@ if (file_exists($jsonFilePathRestoran)) {
                         .then(response => response.json())
                         .then(data => {
                             if (data.status === 'success') {
+                                // Update session saldo
+                                <?php $_SESSION['saldo'] = $objectPengguna->getSaldoLoggedInUser(); ?>
                                 window.location.href = 'index.php?modul=customer_dashboard';
                             } else {
                                 alert(data.message);

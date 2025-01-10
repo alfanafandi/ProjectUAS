@@ -4,117 +4,92 @@ require_once 'model/pengguna_model.php';
 
 class TransaksiModel
 {
-    private $transaksi = [];
-    private $next_id = 1;
     private $penggunaModel;
-
-    private $filePath = __DIR__ . '/../json/transaksi.json';
+    private $db;
 
     public function __construct(PenggunaModel $penggunaModel)
     {
         $this->penggunaModel = $penggunaModel;
+        $this->db = new mysqli('localhost', 'root', '', 'projectdb');
 
-        // Memuat data dari file JSON jika ada
-        $this->loadFromFile();
-        $this->next_id = count($this->transaksi) + 1;
-    }
-
-    // Menyimpan data transaksi ke file JSON
-    private function saveToFile()
-    {
-        $data = [];
-        foreach ($this->transaksi as $transaksi) {
-            $data[] = [
-                'transaksi_id' => $transaksi->transaksi_id,
-                'nama_pengguna' => $transaksi->nama_pengguna,
-                'jumlah_topup' => $transaksi->jumlah_topup,
-                'status' => $transaksi->status,
-            ];
-        }
-        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT));
-    }
-
-    // Memuat data transaksi dari file JSON
-    private function loadFromFile()
-    {
-        if (file_exists($this->filePath)) {
-            $data = json_decode(file_get_contents($this->filePath), true);
-            foreach ($data as $transaksi_data) {
-                $this->transaksi[] = new Transaksi(
-                    $transaksi_data['transaksi_id'],
-                    $transaksi_data['nama_pengguna'],
-                    $transaksi_data['jumlah_topup'],
-                    $transaksi_data['status']
-                );
-            }
+        if ($this->db->connect_error) {
+            die("Connection failed: " . $this->db->connect_error);
         }
     }
 
     public function addTransaksi($nama_pengguna, $jumlah_topup)
     {
-        $transaksi = new Transaksi($this->next_id++, $nama_pengguna, $jumlah_topup, "Pending");
-        $this->transaksi[] = $transaksi;
-        $this->saveToFile();
+        $stmt = $this->db->prepare("INSERT INTO transaksi (nama_pengguna, jumlah_topup, status) VALUES (?, ?, 'Pending')");
+        $stmt->bind_param("si", $nama_pengguna, $jumlah_topup);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function getAllTransaksi()
     {
-        return $this->transaksi;
+        $result = $this->db->query("SELECT * FROM transaksi");
+        $transaksis = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $transaksis[] = new Transaksi($row['transaksi_id'], $row['nama_pengguna'], $row['jumlah_topup'], $row['status']);
+        }
+
+        return $transaksis;
     }
 
     public function getTransaksiById($transaksi_id)
     {
-        foreach ($this->transaksi as $transaksi) {
-            if ($transaksi->transaksi_id == $transaksi_id) {
-                return $transaksi;
-            }
+        $stmt = $this->db->prepare("SELECT * FROM transaksi WHERE transaksi_id = ?");
+        $stmt->bind_param("i", $transaksi_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $transaksi_data = $result->fetch_assoc();
+        $stmt->close();
+
+        if ($transaksi_data) {
+            return new Transaksi(
+                $transaksi_data['transaksi_id'],
+                $transaksi_data['nama_pengguna'],
+                $transaksi_data['jumlah_topup'],
+                $transaksi_data['status']
+            );
         }
+
         return null;
     }
 
     public function approveTransaksi($transaksi_id)
     {
-        foreach ($this->transaksi as $transaksi) {
-            if ($transaksi->transaksi_id == $transaksi_id && $transaksi->status == "Pending") {
-                $transaksi->status = "Approved";
-                $user = $this->penggunaModel->getUserByUsername($transaksi->nama_pengguna['user_username']);
+        $stmt = $this->db->prepare("UPDATE transaksi SET status = 'Approved' WHERE transaksi_id = ? AND status = 'Pending'");
+        $stmt->bind_param("i", $transaksi_id);
+        $stmt->execute();
 
-                if ($user) {
-                    $this->penggunaModel->updateSaldo($user->user_id, $transaksi->jumlah_topup);
-                    $this->penggunaModel->saveToFile();
-                }
+        if ($stmt->affected_rows > 0) {
+            $transaksi = $this->getTransaksiById($transaksi_id);
+            $user = $this->penggunaModel->getUserByUsername($transaksi->nama_pengguna);
 
-                $this->saveToFile();
-                return true;
+            if ($user) {
+                $this->penggunaModel->updateSaldo($user->user_id, $transaksi->jumlah_topup);
             }
         }
-        return false;
-    }
 
+        $stmt->close();
+    }
 
     public function rejectTransaksi($transaksi_id)
     {
-        foreach ($this->transaksi as $transaksi) {
-            if ($transaksi->transaksi_id == $transaksi_id && $transaksi->status == "Pending") {
-                $transaksi->status = "Rejected";
-                $this->saveToFile();
-                return true;
-            }
-        }
-        return false;
+        $stmt = $this->db->prepare("UPDATE transaksi SET status = 'Rejected' WHERE transaksi_id = ? AND status = 'Pending'");
+        $stmt->bind_param("i", $transaksi_id);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function deleteTransaksi($transaksi_id)
     {
-        foreach ($this->transaksi as $key => $transaksi) {
-            if ($transaksi->transaksi_id == $transaksi_id) {
-                unset($this->transaksi[$key]);
-                $this->transaksi = array_values($this->transaksi);
-                $this->saveToFile();
-                return true;
-            }
-        }
-        return false;
+        $stmt = $this->db->prepare("DELETE FROM transaksi WHERE transaksi_id = ?");
+        $stmt->bind_param("i", $transaksi_id);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function getSaldo($user_username)
